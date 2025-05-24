@@ -4,9 +4,7 @@
   <meta charset="UTF-8">
   <title>Efficient Machine Learning Project</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- MathJax (optional) -->
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
   <style>
@@ -15,44 +13,47 @@
     main { max-width:1600px; margin:auto; }
 
     /* Two-column grid (sidebar + content) */
-    .content-wrap { display:grid; grid-template-columns:260px 1fr; gap:2rem; }
+    .content-wrap{ display:grid; grid-template-columns:260px 1fr; gap:2rem; }
     @media (max-width: 991.98px){
-      .content-wrap { grid-template-columns:1fr; }
-      aside#toc   { position:static; }
+      .content-wrap{ grid-template-columns:1fr; }
+      #toc{ position:static; }
     }
 
-    /* ────────── TOC styling ────────── */
-    #toc { position:sticky; top:90px; max-height:calc(100vh - 100px); overflow-y:auto; padding-right:0.5rem; }
-    #toc h2 { font-size:1.5rem; font-weight:700; margin-bottom:1rem; }
-    #toc ul { list-style:none; margin:0; padding:0; }
-    #toc li { margin-bottom:0.25rem; }
-    #toc li > a { text-decoration:none; color:#0d6efd; }
-    #toc li > a:hover { text-decoration:underline; }
-    #toc ul ul { margin-left:1rem; border-left:2px solid #e5e5e5; padding-left:0.75rem; }
-
-    /* “Introduction …” TOC 항목 전용 */
+    /* ────────── TOC ────────── */
+    #toc{ position:sticky; top:90px; max-height:calc(100vh - 100px); overflow-y:auto; padding-right:0.5rem; }
+    #toc h2{ font-size:1.5rem; font-weight:700; margin-bottom:1rem; }
+    #toc ul{ list-style:none; margin:0; padding:0; }
+    #toc li{ margin-bottom:0.25rem; }
+    #toc li>a{ text-decoration:none; color:#0d6efd; }
+    #toc li>a:hover{ text-decoration:underline; }
+    #toc ul ul{ margin-left:1rem; border-left:2px solid #e5e5e5; padding-left:0.75rem; }
     #toc a.toc-title{ font-size:1.4rem; font-weight:800; display:block; text-align:center; }
 
-    /* ────────── Article styling ────────── */
-    article h1, article h2, article h3 { font-weight:800; margin-top:3rem; margin-bottom:1rem; }
-    article p { line-height:1.6; }
+    /* ────────── 본문 ────────── */
+    article h1, article h2, article h3{ font-weight:800; margin-top:3rem; margin-bottom:1rem; }
+    article p{ line-height:1.6; }
 
-    /* ────────── Hero header ────────── */
-    .hero-section{ margin:0 auto 2.5rem auto; border-bottom:1px solid #e5e5e5; padding-bottom:2rem; max-width:1000px; }
+    /* ────────── Hero ────────── */
+    .hero-section{
+      max-width:1000px; margin:0 auto 2.5rem auto;
+      border-bottom:1px solid #e5e5e5; padding-bottom:2rem;
+    }
     .hero-section p{ max-width:65ch; margin-bottom:0; }
 
-    /* ────────── Meta (authors/affiliations) ────────── */
+    /* ────────── Meta ────────── */
     .meta-section{
+      max-width:1000px;              /* 히어로와 같은 폭 */
+      margin:0 auto 2.5rem auto;     /* 가운데 정렬 */
       border-bottom:1px solid #e5e5e5;
       padding:3rem 0 2.5rem 0;
-      margin-bottom:2.5rem;
     }
-    .meta-section .meta-head{ font-size:0.75rem; letter-spacing:0.05em; text-transform:uppercase; color:#6c757d; margin-bottom:0.5rem; }
-    .meta-section li{ list-style:none; margin:0; padding:0; }
+    .meta-head{ font-size:0.75rem; letter-spacing:0.05em; text-transform:uppercase; color:#6c757d; margin-bottom:0.5rem; }
+    .meta-section li{ list-style:none; margin:0; }
+
   </style>
 </head>
 <body>
-  <!-- Top navbar -->
+  <!-- 상단 네비바 -->
   <nav class="navbar navbar-light bg-light fixed-top shadow-sm">
     <div class="container-fluid">
       <span class="navbar-brand fw-bold">A Visual Dive into Conditional Flow Matching</span>
@@ -61,7 +62,7 @@
 
   <main class="my-4">
 
-    <!-- ────────── Hero header ────────── -->
+    <!-- Hero -->
     <section class="hero-section">
       <h1 class="display-4 fw-bold">A Visual Dive into Conditional Flow Matching</h1>
       <p class="lead">
@@ -72,46 +73,37 @@
       </p>
     </section>
 
-    <!-- ────────── Meta information ────────── -->
-    <section class="meta-section container-fluid">
+    <!-- Meta -->
+    <section class="meta-section">
       <div class="row gy-4">
-        <!-- Authors -->
         <div class="col-12 col-md-4">
           <div class="meta-head">Authors</div>
-          <ul class="p-0 m-0">
-            <li>Anne Gagneux</li>
-            <li>Ségolène Martin</li>
-            <li>Rémi Emonet</li>
-            <li>Quentin Bertrand</li>
-            <li>Mathurin Massias</li>
+          <ul>
+            <li>Anne Gagneux</li><li>Ségolène Martin</li><li>Rémi Emonet</li>
+            <li>Quentin Bertrand</li><li>Mathurin Massias</li>
           </ul>
         </div>
 
-        <!-- Affiliations -->
         <div class="col-12 col-md-4">
           <div class="meta-head">Affiliations</div>
-          <ul class="p-0 m-0">
-            <li>INRIA, ENS de Lyon</li>
-            <li>Technische Universität Berlin</li>
-            <li>Inria, Université Jean Monnet</li>
-            <li>Inria, Université Jean Monnet</li>
+          <ul>
+            <li>INRIA, ENS de Lyon</li><li>Technische Universität Berlin</li>
+            <li>Inria, Université Jean Monnet</li><li>Inria, Université Jean Monnet</li>
             <li>Inria, ENS de Lyon</li>
           </ul>
         </div>
 
-        <!-- Published -->
         <div class="col-12 col-md-4">
           <div class="meta-head">Published</div>
-          <ul class="p-0 m-0">
-            <li>April&nbsp;28, 2025</li>
-          </ul>
+          <ul><li>April&nbsp;28, 2025</li></ul>
         </div>
       </div>
     </section>
 
+    <!-- ────────── 본문 & TOC ────────── -->
     <div class="content-wrap">
 
-      <!-- ────────── Sidebar / TOC ────────── -->
+      <!-- TOC -->
       <aside id="toc">
         <h2>Contents</h2>
         <ul>
