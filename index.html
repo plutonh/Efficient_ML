@@ -20,7 +20,7 @@
     }
 
     /* ────────── TOC ────────── */
-    #toc{ position:sticky; top:90px; max-height:calc(100vh - 100px); overflow-y:auto; padding-right:0.5rem; }
+    #toc   { position:sticky; top:90px; max-height:calc(100vh - 100px); overflow-y:auto; padding-right:0.5rem; }
     #toc h2{ font-size:1.5rem; font-weight:700; margin-bottom:1rem; }
     #toc ul{ list-style:none; margin:0; padding:0; }
     #toc li{ margin-bottom:0.25rem; }
@@ -64,7 +64,7 @@
 
     <!-- Hero -->
     <section class="hero-section">
-      <h1 class="display-4 fw-bold">Efficient GNN</h1>
+      <h1 class="display-4 fw-bold text-center">Efficient GNN</h1>
       <p class="lead">
         Conditional Flow Matching (CFM) was introduced by three concurrent papers at ICLR&nbsp;2023 —
         each framing the idea via conditional matching, rectifying flows, or stochastic interpolants.
@@ -114,15 +114,16 @@
         <h2>Contents</h2>
         <ul>
           <li>
-            <a href="#intro">Background</a>
+            <a href="#background">Background</a>
             <ul>
-              <li><a href="#nflows">Normalizing Flows</a></li>
-              <li><a href="#cnf">Continuous Normalizing Flows</a></li>
+              <li><a href="#backgorund_1">Gate Sizing Problems</a></li>
+              <li><a href="#background_2">Graph Representation Method for Gate Sizing</a></li>
+              <li><a href="#background_3">Gate Sizing with ML</a></li>
             </ul>
           </li>
-          <li><a href="#cfm">Conditional Flow Matching</a>
+          <li><a href="#methods">Methods</a>
             <ul>
-              <li><a href="#cfm-intuition">Intuition of Conditional Flow Matching</a></li>
+              <li><a href="#methods_1">Intuition of Conditional Flow Matching</a></li>
               <li><a href="#cfm-choices">Modelling Choices</a></li>
               <li><a href="#cfm-uncond">From Conditional to Unconditional Velocity</a></li>
             </ul>
@@ -142,11 +143,10 @@
       <!-- ────────── Main article ────────── -->
       <article id="content">
         <!-- Each section gets an ID used in the TOC -->
-        
+
+        <!-- ────────── Background ────────── -->
         <section id="background">
-          <h1>
-            Background
-          </h1>
+          <h1>Background</h1>
           <p>
             In a nutshell, the task of generative modelling is to learn a model
             \(p_\theta(x)\) that approximates the true data distribution \(p_\text{data}(x)\).
@@ -154,32 +154,67 @@
             high-quality samples, and providing tractable likelihood estimates…
           </p>
         </section>
-
         
-
-        <section id="gate_sizing_problems">
+        <section id="background_1">
           <h4>Gate Sizing Problems</h4>
           <p>⋯ (write content here) ⋯</p>
         </section>
 
-        <section id="gnn_representation">
+        <section id="background_2">
           <h4>Graph Representation Method for Gate Sizing</h4>
           <p>⋯ (write content here) ⋯</p>
         </section>
         
-        <section id="ml_gate_sizing">
+        <section id="background_3">
           <h4>Gate Sizing with ML</h4>
           <p>⋯ (write content here) ⋯</p>
         </section>
 
-
+        <!-- ────────── Methods ────────── -->
         <section id="methods">
           <h1>Methods</h1>
           <p>⋯</p>
         </section>
 
+        <section id="methods_1">
+          <h4>Graph Representation + feature embedding</h4>
+          <p>⋯ (write content here) ⋯</p>
+        </section>
+
+        <section id="methods_2">
+          <h4>Model Architecture</h4>
+          <p>⋯ (write content here) ⋯</p>
+        </section>
         
-        <section id="cfm-intuition"><h2>Intuition of Conditional Flow Matching</h2><p>⋯</p></section>
+        <section id="methods_3">
+          <h4>Loss Function</h4>
+          <p>⋯ (write content here) ⋯</p>
+        </section>
+
+        <!-- ────────── Experiment ────────── -->
+        <section id="experiment">
+          <h1>Methods</h1>
+          <p>⋯</p>
+        </section>
+
+        <section id="experiment_1">
+          <h4>Model Performance</h4>
+          <p>⋯ (write content here) ⋯</p>
+        </section>
+
+        <!-- ────────── Conclusion ────────── -->
+        <section id="conclusion">
+          <h1>Conclusion</h1>
+          <p>⋯</p>
+        </section>
+
+        <section id="conclusion_1">
+          <p>⋯ (write content here) ⋯</p>
+        </section>
+
+        
+        
+<!--    <section id="cfm-intuition"><h2>Intuition of Conditional Flow Matching</h2><p>⋯</p></section>
         <section id="cfm-choices"><h2>Modelling Choices</h2><p>⋯</p></section>
         <section id="cfm-uncond"><h2>From Conditional to Unconditional Velocity</h2><p>⋯</p></section>
 
@@ -187,7 +222,7 @@
         <section id="straight-flows"><h2>Fast Sampling with Straight Flows</h2><p>⋯</p></section>
         <section id="diffusion"><h2>Diffusion Models</h2><p>⋯</p></section>
         <section id="link"><h2>Link Between Diffusion and Flow-Matching</h2><p>⋯</p></section>
-        <section id="playground"><h2>CFM Playground</h2><p>⋯</p></section>
+        <section id="playground"><h2>CFM Playground</h2><p>⋯</p></section> -->
 
         <section id="refs">
           <h1>References</h1>
