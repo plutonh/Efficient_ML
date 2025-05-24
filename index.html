@@ -4,119 +4,116 @@
   <meta charset="UTF-8">
   <title>A Visual Dive into Conditional Flow Matching</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Bootstrap CSS for quick styling -->
+  <!-- Bootstrap CSS (quick baseline) -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- MathJax for equations -->
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <style>
-    body { margin: 0; padding-top: 4rem; }
-    .navbar-brand { font-weight: 600; }
-    .toc ul { list-style: none; padding-left: 0; }
-    .toc li { margin-bottom: 0.25rem; }
-    article img { max-width: 100%; height: auto; }
-    pre code { white-space: pre-wrap; }
-    /* highlight active toc link */
-    .toc a.active { font-weight: 600; text-decoration: underline; }
+    /* ────────── Layout ────────── */
+    body {padding-top:4rem; font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;}
+    main {max-width:1600px; margin:auto;}
+
+    /* Two‑column grid (sidebar + content) */
+    .content-wrap {display:grid; grid-template-columns:260px 1fr; gap:2rem;}
+    @media (max-width: 991.98px){ /* stack on tablets/phones */
+      .content-wrap {grid-template-columns:1fr;}
+      aside#toc {position:static;}
+    }
+
+    /* ────────── TOC styling ────────── */
+    #toc {position:sticky; top:90px; max-height:calc(100vh - 100px); overflow-y:auto; padding-right:0.5rem;}
+    #toc h2 {font-size:1.5rem; font-weight:700; margin-bottom:1rem;}
+    #toc ul {list-style:none; margin:0; padding:0;}
+    #toc li {margin-bottom:0.25rem;}
+    #toc li > a {text-decoration:none; color:#0d6efd;}
+    #toc li > a:hover {text-decoration:underline;}
+    /* nested indentation */
+    #toc ul ul {margin-left:1rem; border-left:2px solid #e5e5e5; padding-left:0.75rem;}
+
+    /* ────────── Article styling ────────── */
+    article h1, article h2, article h3 {font-weight:800; margin-top:3rem; margin-bottom:1rem;}
+    article p {line-height:1.6;}
   </style>
-  <!-- MathJax for LaTeX equations -->
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-  <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const sections = document.querySelectorAll("article h2, article h3");
-    const tocLinks = document.querySelectorAll(".toc a");
-    window.addEventListener("scroll", () => {
-      let current = "";
-      sections.forEach(sec => {
-        const top = sec.offsetTop - 90; // account for fixed navbar
-        if (pageYOffset >= top) current = sec.getAttribute("id");
-      });
-      tocLinks.forEach(link => {
-        link.classList.remove("active");
-        if (link.getAttribute("href") === '#' + current) {
-          link.classList.add("active");
-        }
-      });
-    });
-  });
-  </script>
 </head>
 <body>
-
-<div class="container my-4">
-  <h1 class="text-center">A Visual Dive into Conditional Flow Matching</h1>
-  <p class="text-center text-muted">Anne Gagneux · Ségolène Martin · Rémi Emonet · Quentin Bertrand · Mathurin Massias</p>
-
-  <article class="row">
-    <aside class="col-lg-3 toc">
-      <h4>Contents</h4>
-      <ul>
-        <li><a href="#intro">Introduction to Generative Modelling with Normalizing Flows</a>
-          <ul>
-            <li><a href="#nf">Normalizing Flows</a></li>
-            <li><a href="#cnf">Continuous Normalizing Flows</a></li>
-          </ul>
-        </li>
-        <li><a href="#cfm">Conditional Flow Matching</a>
-          <ul>
-            <li><a href="#cfm-intuition">Intuition of Conditional Flow Matching</a></li>
-            <li><a href="#cfm-model">Modelling Choices</a></li>
-            <li><a href="#conditional-to-unconditional">From Conditional to Unconditional Velocity</a></li>
-          </ul>
-        </li>
-        <li><a href="#further">Going Further</a>
-          <ul>
-            <li><a href="#straight-flows">Fast Sampling with Straight Flows</a></li>
-            <li><a href="#diffusion">Diffusion Models</a></li>
-            <li><a href="#links">Link Between Diffusion and Flow‑Matching</a></li>
-            <li><a href="#playground">CFM Playground</a></li>
-          </ul>
-        </li>
-        <li><a href="#references">References</a></li>
-      </ul>
-    </aside>
-
-    <div class="col-lg-9">
-      <section id="intro">
-        <h2>Introduction to Generative Modelling with Normalizing Flows</h2>
-        <p><!-- Your introduction content goes here. Replace the placeholder text with your own write‑up or markdown‑to‑HTML conversion. --></p>
-        <h3 id="nf">Normalizing Flows</h3>
-        <p><!-- content --></p>
-        <h3 id="cnf">Continuous Normalizing Flows</h3>
-        <p><!-- content --></p>
-      </section>
-
-      <section id="cfm">
-        <h2>Conditional Flow Matching</h2>
-        <h3 id="cfm-intuition">Intuition of Conditional Flow Matching</h3>
-        <p><!-- content --></p>
-        <h3 id="cfm-model">Modelling Choices</h3>
-        <p><!-- content --></p>
-        <h3 id="conditional-to-unconditional">From Conditional to Unconditional Velocity</h3>
-        <p><!-- content --></p>
-      </section>
-
-      <section id="further">
-        <h2>Going Further</h2>
-        <h3 id="straight-flows">Fast Sampling with Straight Flows</h3>
-        <p><!-- content --></p>
-        <h3 id="diffusion">Diffusion Models</h3>
-        <p><!-- content --></p>
-        <h3 id="links">Link Between Diffusion and Flow‑Matching</h3>
-        <p><!-- content --></p>
-        <h3 id="playground">CFM Playground</h3>
-        <p><!-- content --></p>
-      </section>
-
-      <section id="references">
-        <h2>References</h2>
-        <ol>
-          <li>R. T. Qian <em>et&nbsp;al.</em>, “Conditional Flow Matching,” <em>ICLR</em>, 2023.</li>
-          <!-- Add more references as needed -->
-        </ol>
-      </section>
+  <!-- Top navbar title -->
+  <nav class="navbar navbar-light bg-light fixed-top shadow-sm">
+    <div class="container-fluid">
+      <span class="navbar-brand fw-bold">A Visual Dive into Conditional Flow Matching</span>
     </div>
-  </article>
-</div>
+  </nav>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <main class="my-4">
+    <div class="content-wrap">
+      <!-- ────────── Sidebar / TOC ────────── -->
+      <aside id="toc">
+        <h2>Contents</h2>
+        <ul>
+          <li><a href="#intro">Introduction to Generative Modelling with Normalizing Flows</a>
+            <ul>
+              <li><a href="#nflows">Normalizing Flows</a></li>
+              <li><a href="#cnf">Continuous Normalizing Flows</a></li>
+            </ul>
+          </li>
+          <li><a href="#cfm">Conditional Flow Matching</a>
+            <ul>
+              <li><a href="#cfm-intuition">Intuition of Conditional Flow Matching</a></li>
+              <li><a href="#cfm-choices">Modelling Choices</a></li>
+              <li><a href="#cfm-uncond">From Conditional to Unconditional Velocity</a></li>
+            </ul>
+          </li>
+          <li><a href="#further">Going Further</a>
+            <ul>
+              <li><a href="#straight-flows">Fast Sampling with Straight Flows</a></li>
+              <li><a href="#diffusion">Diffusion Models</a></li>
+              <li><a href="#link">Link Between Diffusion and Flow‑Matching</a></li>
+              <li><a href="#playground">CFM Playground</a></li>
+            </ul>
+          </li>
+          <li><a href="#refs">References</a></li>
+        </ul>
+      </aside>
+
+      <!-- ────────── Main article ────────── -->
+      <article id="content">
+        <!-- Each section gets an ID used in the TOC -->
+        <section id="intro">
+          <h1>Introduction to Generative Modelling with Normalizing Flows</h1>
+          <p>In a nutshell, the task of generative modelling is to learn a model \(p_\theta(x)\) that approximates the true data distribution \(p_\text{data}(x)\). This comes with three main challenges: enforcing fast sampling, generating high‑quality samples, and providing tractable likelihood estimates…</p>
+        </section>
+
+        <section id="nflows">
+          <h2>Normalizing Flows</h2>
+          <p>⋯ (write content here) ⋯</p>
+        </section>
+
+        <section id="cnf">
+          <h2>Continuous Normalizing Flows</h2>
+          <p>⋯</p>
+        </section>
+
+        <section id="cfm">
+          <h1>Conditional Flow Matching</h1>
+          <p>⋯</p>
+        </section>
+        <section id="cfm-intuition"><h2>Intuition of Conditional Flow Matching</h2><p>⋯</p></section>
+        <section id="cfm-choices"><h2>Modelling Choices</h2><p>⋯</p></section>
+        <section id="cfm-uncond"><h2>From Conditional to Unconditional Velocity</h2><p>⋯</p></section>
+
+        <section id="further"><h1>Going Further</h1><p>⋯</p></section>
+        <section id="straight-flows"><h2>Fast Sampling with Straight Flows</h2><p>⋯</p></section>
+        <section id="diffusion"><h2>Diffusion Models</h2><p>⋯</p></section>
+        <section id="link"><h2>Link Between Diffusion and Flow‑Matching</h2><p>⋯</p></section>
+        <section id="playground"><h2>CFM Playground</h2><p>⋯</p></section>
+
+        <section id="refs">
+          <h1>References</h1>
+          <ol>
+            <li>R. T. Qian, <strong>et al.</strong> <i>Title of the paper</i>, 2023.</li>
+          </ol>
+        </section>
+      </article>
+    </div>
+  </main>
 </body>
 </html>
