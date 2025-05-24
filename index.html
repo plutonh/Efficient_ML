@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <title>Efficient Machine Learning Project</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Bootstrap CSS (baseline) -->
+  <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- MathJax (optional, for equations) -->
+  <!-- MathJax (optional) -->
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
   <style>
@@ -16,7 +16,7 @@
 
     /* Two-column grid (sidebar + content) */
     .content-wrap { display:grid; grid-template-columns:260px 1fr; gap:2rem; }
-    @media (max-width: 991.98px){           /* stack on tablets/phones */
+    @media (max-width: 991.98px){
       .content-wrap { grid-template-columns:1fr; }
       aside#toc   { position:static; }
     }
@@ -28,37 +28,31 @@
     #toc li { margin-bottom:0.25rem; }
     #toc li > a { text-decoration:none; color:#0d6efd; }
     #toc li > a:hover { text-decoration:underline; }
-
-    /* nested indentation */
     #toc ul ul { margin-left:1rem; border-left:2px solid #e5e5e5; padding-left:0.75rem; }
 
-    /* “Introduction …” TOC 항목 전용 (크게 + 중앙) */
-    #toc a.toc-title{
-      font-size:1.4rem;     /* 크기 조절 */
-      font-weight:800;      /* 굵게 */
-      display:block;        /* 블록화 → 중앙정렬 가능 */
-      text-align:center;    /* 중앙 정렬 */
-    }
+    /* “Introduction …” TOC 항목 전용 */
+    #toc a.toc-title{ font-size:1.4rem; font-weight:800; display:block; text-align:center; }
 
     /* ────────── Article styling ────────── */
     article h1, article h2, article h3 { font-weight:800; margin-top:3rem; margin-bottom:1rem; }
     article p { line-height:1.6; }
 
     /* ────────── Hero header ────────── */
-    .hero-section{
-      margin: 0 auto 2.5rem auto;   /* 본문과 간격 */
+    .hero-section{ margin:0 auto 2.5rem auto; border-bottom:1px solid #e5e5e5; padding-bottom:2rem; max-width:1000px; }
+    .hero-section p{ max-width:65ch; margin-bottom:0; }
+
+    /* ────────── Meta (authors/affiliations) ────────── */
+    .meta-section{
       border-bottom:1px solid #e5e5e5;
-      padding-bottom:2rem;
-      max-width:1000px;             /* 너무 넓어지지 않도록 */
+      padding:3rem 0 2.5rem 0;
+      margin-bottom:2.5rem;
     }
-    .hero-section p{
-      max-width:65ch;               /* 한 줄 길이 제한 */
-      margin-bottom:0;
-    }
+    .meta-section .meta-head{ font-size:0.75rem; letter-spacing:0.05em; text-transform:uppercase; color:#6c757d; margin-bottom:0.5rem; }
+    .meta-section li{ list-style:none; margin:0; padding:0; }
   </style>
 </head>
 <body>
-  <!-- Top navbar title -->
+  <!-- Top navbar -->
   <nav class="navbar navbar-light bg-light fixed-top shadow-sm">
     <div class="container-fluid">
       <span class="navbar-brand fw-bold">A Visual Dive into Conditional Flow Matching</span>
@@ -67,15 +61,52 @@
 
   <main class="my-4">
 
-    <!-- ────────── Hero header (제목+요약) ────────── -->
+    <!-- ────────── Hero header ────────── -->
     <section class="hero-section">
       <h1 class="display-4 fw-bold">A Visual Dive into Conditional Flow Matching</h1>
       <p class="lead">
-        Conditional Flow Matching (CFM) was introduced by three concurrent papers at ICLR&nbsp;2023—
-        each framing the idea via conditional matching, rectifying flows, or stochastic
-        interpolants. This article first reviews normalizing flows, then offers a comprehensive,
-        visual exploration of CFM’s probabilistic foundations.
+        Conditional Flow Matching (CFM) was introduced by three concurrent papers at ICLR&nbsp;2023 —
+        each framing the idea via conditional matching, rectifying flows, or stochastic interpolants.
+        This article first reviews normalizing flows, then offers a comprehensive, visual exploration
+        of CFM’s probabilistic foundations.
       </p>
+    </section>
+
+    <!-- ────────── Meta information ────────── -->
+    <section class="meta-section container-fluid">
+      <div class="row gy-4">
+        <!-- Authors -->
+        <div class="col-12 col-md-4">
+          <div class="meta-head">Authors</div>
+          <ul class="p-0 m-0">
+            <li>Anne Gagneux</li>
+            <li>Ségolène Martin</li>
+            <li>Rémi Emonet</li>
+            <li>Quentin Bertrand</li>
+            <li>Mathurin Massias</li>
+          </ul>
+        </div>
+
+        <!-- Affiliations -->
+        <div class="col-12 col-md-4">
+          <div class="meta-head">Affiliations</div>
+          <ul class="p-0 m-0">
+            <li>INRIA, ENS de Lyon</li>
+            <li>Technische Universität Berlin</li>
+            <li>Inria, Université Jean Monnet</li>
+            <li>Inria, Université Jean Monnet</li>
+            <li>Inria, ENS de Lyon</li>
+          </ul>
+        </div>
+
+        <!-- Published -->
+        <div class="col-12 col-md-4">
+          <div class="meta-head">Published</div>
+          <ul class="p-0 m-0">
+            <li>April&nbsp;28, 2025</li>
+          </ul>
+        </div>
+      </div>
     </section>
 
     <div class="content-wrap">
@@ -113,9 +144,10 @@
       <!-- ────────── Main article ────────── -->
       <article id="content">
         <!-- Each section gets an ID used in the TOC -->
-        <section id="intro">
-          <h1 style="text-align: center;">
-            Efficient GNN
+        
+        <section id="background">
+          <h1>
+            Background
           </h1>
           <p>
             In a nutshell, the task of generative modelling is to learn a model
@@ -125,20 +157,30 @@
           </p>
         </section>
 
-        <section id="nflows">
-          <h2>Normalizing Flows</h2>
+        
+
+        <section id="gate_sizing_problems">
+          <h3>Gate Sizing Problems</h3>
           <p>⋯ (write content here) ⋯</p>
         </section>
 
-        <section id="cnf">
-          <h2>Continuous Normalizing Flows</h2>
+        <section id="gnn_representation">
+          <h3>Graph Representation Method for Gate Sizing</h3>
+          <p>⋯ (write content here) ⋯</p>
+        </section>
+        
+        <section id="ml_gate_sizing">
+          <h3>Gate Sizing with ML</h3>
+          <p>⋯ (write content here) ⋯</p>
+        </section>
+
+
+        <section id="methods">
+          <h1>Methods</h1>
           <p>⋯</p>
         </section>
 
-        <section id="cfm">
-          <h1>Conditional Flow Matching</h1>
-          <p>⋯</p>
-        </section>
+        
         <section id="cfm-intuition"><h2>Intuition of Conditional Flow Matching</h2><p>⋯</p></section>
         <section id="cfm-choices"><h2>Modelling Choices</h2><p>⋯</p></section>
         <section id="cfm-uncond"><h2>From Conditional to Unconditional Velocity</h2><p>⋯</p></section>
