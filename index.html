@@ -30,6 +30,15 @@
     /* nested indentation */
     #toc ul ul {margin-left:1rem; border-left:2px solid #e5e5e5; padding-left:0.75rem;}
 
+    /* highlight + center the first (main) entry */
+    #toc li:first-child > a {
+      display:block;
+      font-size:1.4rem;          /* biggest text in sidebar */
+      font-weight:800;
+      text-align:center;         /* centered */
+      margin-bottom:0.75rem;
+    }
+
     /* ────────── Article styling ────────── */
     article h1, article h2, article h3 {font-weight:800; margin-top:3rem; margin-bottom:1rem;}
     article p {line-height:1.6;}
