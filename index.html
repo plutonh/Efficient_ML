@@ -94,7 +94,8 @@
     .w-80{ width:80% !important; }
     .w-90{ width:90% !important; }
 
-    .eq-big{ font-size:1.1rem; } 
+    .eq-big{ font-size:1.1rem; }
+    .fig-label{ display:block; font-weight:600; }
 
   </style>
 </head>
@@ -255,16 +256,15 @@
           <figure style="text-align:center;">
             <img src="./Image/Method.png""
                  alt="Method"
-                 class="img-fluid" style="max-width:75%;">
+                 class="img-fluid" style="max-width:100%;">
           
-            <figcaption style="font-size:0.9rem; margin-top:0.75rem;">
-              <strong>Figure&nbsp;1.</strong> Illustration of emerging visual properties in toddlers.
-              <span class="d-block">
-                A: Caricature recognition. B: Shape bias. C: Preferred views. D: Configural sensitivity.
-                Green rectangles (A, B) indicate … Blue rectangle (C) … Red rectangle (D) …
-              </span>
-            </figcaption>
-          </figure>
+          <figcaption class="figure-caption">
+            <span class="fig-label">Figure&nbsp;1.</span>
+            Illustration of emerging visual properties in toddlers.
+            A: Caricature recognition. B: Shape bias.
+            C: Preferred views. D: Configural sensitivity.
+            Green rectangles (A, B) indicate … Blue rectangle (C) … Red rectangle (D) …
+          </figcaption>
           
           <p>
             Motivated by these approaches, we adopt a graph-based representation of a circuit by viewing gate-level netlists as a graph with embedded features, 
@@ -336,8 +336,19 @@
             Specifically, a subcircuit combines all paths sharing the same start and endpoints. 
             Thus, we propose a heterogeneous graph model that effectively captures the intrinsic structure of the circuit by delineating its two fundamental node types: pins and cells, as depicted in Fig. 2.
           </p>
+
+          <figure style="text-align:center;">
+            <img src="./Image/HeteroGraph.png""
+                 alt="Hetero_Graph"
+                 class="img-fluid" style="max-width:70%;">
           
-          <img src="./Image/HeteroGraph.png" alt="Hetero_Graph" class="img-fluid w-70 d-block mx-auto my-5">
+          <figcaption class="figure-caption">
+            <span class="fig-label">Figure&nbsp;1.</span>
+            Illustration of emerging visual properties in toddlers.
+            A: Caricature recognition. B: Shape bias.
+            C: Preferred views. D: Configural sensitivity.
+            Green rectangles (A, B) indicate … Blue rectangle (C) … Red rectangle (D) …
+          </figcaption>
 
           <p>
             As shown in the figure, subcircuits were extracted by designating input ports or registers as the starting points and output ports or registers as the endpoints. 
@@ -371,8 +382,19 @@
             Our proposed approach incorporates both topological and geometric circuit information to improve sizing performance.
             The following figure illustrates an overview of DPH-Sizer.
           </p>
-
-          <img src="./Image/Flow.png" alt="Flow" class="img-fluid w-100 d-block mx-auto my-5">
+          
+          <figure style="text-align:center;">
+            <img src="./Image/Flow.png""
+                 alt="Flow"
+                 class="img-fluid" style="max-width:100%;">
+          
+          <figcaption class="figure-caption">
+            <span class="fig-label">Figure&nbsp;1.</span>
+            Illustration of emerging visual properties in toddlers.
+            A: Caricature recognition. B: Shape bias.
+            C: Preferred views. D: Configural sensitivity.
+            Green rectangles (A, B) indicate … Blue rectangle (C) … Red rectangle (D) …
+          </figcaption>
 
           </p>
             <h5>Heterogeneous Graph</h5>
@@ -389,6 +411,39 @@
           </p>
           
           <img src="./Image/Function_2.png" alt="Function_2" class="img-fluid w-40 d-block mx-auto my-5">
+
+          <p>
+            <div class="eq-big">
+              \[
+              {\Large
+              h'_{i}
+              =\operatorname*{CONCAT}_{1 \le k \le K}
+              \;\sigma\!\Bigl(
+                \sum_{j \in \mathcal{N}_{i}}
+                \alpha^{k}_{ij}\,\mathbf{h}_{j}\mathbf{W}_{k}
+              \Bigr)
+              }
+              \]
+              
+              \[
+              {\Large
+              \alpha_{ij}
+              =\operatorname*{softmax}_{j}(e_{ij})
+              =\frac{\exp(e_{ij})}
+                     {\displaystyle\sum_{k \in \mathcal{N}_{i}}\exp(e_{ik})}
+              }
+              \]
+              
+              \[
+              {\Large
+              e_{ij}
+              =\sigma\!\Bigl(
+                \mathbf{a}^{\top}\bigl[\operatorname{CONCAT}(\tilde{\mathbf{h}}_{i},\tilde{\mathbf{h}}_{j})\bigr]
+              \Bigr)
+              }
+              \]
+            </div>
+          </p>
 
           <p>
             Where 𝑒_𝑖𝑗 denotes the attention score between node 𝑖 and its neighbor node 𝑗, computed using input embeddings˜_ℎ_𝑖 and˜_ℎ_𝑗, a learnable attention parameter vector 𝑎, and the sigmoid activation function 𝜎, the normalized attention coefficient 𝛼_𝑖𝑗 is obtained by applying the softmax function to these attention scores, measuring the relative importance of node 𝑗 in updating node 𝑖’s embedding. The updated embedding ℎ′𝑖 for node 𝑖is calculated by concatenating the outputs from multiple attention heads, where each head 𝑘 employs a distinct learnable weight matrix 𝑊𝑘 and computes its attention coefficient 𝛼𝑘_𝑖𝑗. Here, 𝐾 represents the total number of attention heads, and N𝑖 denotes the set of neighbor nodes for node 𝑖. 
