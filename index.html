@@ -9,7 +9,7 @@
 
   <style>
     /* ────────── Layout ────────── */
-    body { padding-top:4rem; font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    body { padding-top:4rem; font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; counter-reset:cite-counter;}
     main { max-width:1600px; margin:auto; }
 
     /* Two-column grid (sidebar + content) */
@@ -21,6 +21,21 @@
     @media (max-width: 991.98px){
       .content-wrap{ grid-template-columns:1fr; }
       #toc{ position:static; }
+    }
+
+    /* ────────── Citation ────────── */
+    .cite{
+      counter-increment:cite-counter;      /* 번호 +1 */
+      text-decoration:none;                /* 링크 밑줄 제거 */
+      color:#0d6efd;                       /* 파란색—필요하면 변경 */
+      cursor:pointer;
+      position:relative;
+      top:-0.3em;                          /* 위로 약간 올려 <sup> 느낌 */
+      font-size:0.8em;
+    }
+
+    .cite::after{
+      content:"[" counter(cite-counter) "]"; 
     }
 
     /* ────────── TOC ────────── */
@@ -229,7 +244,9 @@
           <p>
             Graph representation methods are widely used when the connection information between components is essential, such as circuit design, social networks, and molecular modeling. 
             Encoding the above data as graphs enables the structure to contain connectivity information so that learning based methods, such as Graph Neural Networks (GNNs), can be effectively leveraged. 
-            For example, Google’s graph-based placement methodology [Mirhoseini et al., Nature 2021] successfully applied GNNs to netlist graphs for chip floorplanning.
+            For example, Google’s graph-based placement methodology
+            <a class="cite" href="#ref-1" id="c-1"></a>
+            successfully applied GNNs to netlist graphs for chip floorplanning.
 
           </p>
 
@@ -419,6 +436,49 @@
           <h1>References</h1>
           <hr class="section-divider">
             <ol>
+
+               <li id="ref-1">
+                <a href="#c-1" class="back">↩︎</a>
+                <span class="ref-title">
+                  A Graph Placement Methodology for Fast Chip Design
+                </span>
+                <span class="ref-detail">
+                  A. Mirhoseini et al.,<em>Nature 594, pp. 207-212.</em> 2021.
+                </span>
+              </li>
+              
+              <li id="ref-2">
+                <a href="#c-2" class="back">↩︎</a>
+                <span class="ref-title">
+                  A Neural Architecture Predictor based on GNN-Enhanced Transformer
+                </span>
+                <span class="ref-detail">
+                  X. Xiang et al., <em>Proc. AISTATS</em> 2024.
+                </span>
+              </li>
+
+              <li id="ref-3">
+                <a href="#c-3" class="back">↩︎</a>
+                <span class="ref-title">
+                  TransSizer: A Novel Transformer-Based Fast Gate Sizer
+                </span>
+                <span class="ref-detail">
+                  S. Nath et al., <em>Proc. ICCAD</em> 2022.
+                </span>
+              </li>
+
+              <li id="ref-4">
+                <a href="#c-4" class="back">↩︎</a>
+                <span class="ref-title">
+                  RL-Sizer: VLSI gate sizing for timing optimization using deep reinforcement learning
+                </span>
+                <span class="ref-detail">
+                  YC. Lu et al., <em>Proc. DAC</em> 2021.
+                </span>
+              </li>
+              
+
+              
               <li>
                 <span class="ref-title">
                   Gate sizing in MOS digital circuits with linear programming
@@ -534,14 +594,6 @@
                   D. Chinnery et al., <em>Proc. ISPD</em> 2022.
                 </span>
               </li>
-              <li>
-                <span class="ref-title">
-                  RL-Sizer: VLSI gate sizing for timing optimization using deep reinforcement learning
-                </span>
-                <span class="ref-detail">
-                  YC. Lu et al., <em>Proc. DAC</em> 2021.
-                </span>
-              </li>
               
               <li>
                 <span class="ref-title">
@@ -590,27 +642,10 @@
               
               <li>
                 <span class="ref-title">
-                  TransSizer: A Novel Transformer-Based Fast Gate Sizer
-                </span>
-                <span class="ref-detail">
-                  S. Nath et al., <em>Proc. ICCAD</em> 2022.
-                </span>
-              </li>
-              <li>
-                <span class="ref-title">
                   An Image is Worth 16×16 Words: Transformers for Image Recognition at Scale
                 </span>
                 <span class="ref-detail">
                   A. Dosovitskiy et al., <em>Proc. ICLR</em> 2021.
-                </span>
-              </li>
-              
-              <li>
-                <span class="ref-title">
-                  A Neural Architecture Predictor based on GNN-Enhanced Transformer
-                </span>
-                <span class="ref-detail">
-                  X. Xiang et al., <em>Proc. AISTATS</em> 2024.
                 </span>
               </li>
               
@@ -763,15 +798,6 @@
                 </span>
                 <span class="ref-detail">
                   M. Wang et al., <em>arXiv preprint arXiv:1909.01315</em>, 2019.
-                </span>
-              </li>
-
-              <li>
-                <span class="ref-title">
-                  A Graph Placement Methodology for Fast Chip Design
-                </span>
-                <span class="ref-detail">
-                  A. Mirhoseini et al.,<em>Nature 594, pp. 207-212.</em> 2021.
                 </span>
               </li>
               
