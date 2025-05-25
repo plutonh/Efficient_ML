@@ -239,7 +239,7 @@
             Specifically, a subcircuit combines all paths sharing the same start and endpoints. 
             Thus, we propose a heterogeneous graph model that effectively captures the intrinsic structure of the circuit by delineating its two fundamental node types: pins and cells, as depicted in Fig. 2.
             
-            <img src="./Image/HeteroGraph.png" alt="Hetero_Graph" class="img-fluid w-100">
+            <img src="./Image/HeteroGraph.png" alt="Hetero_Graph" class="img-fluid w-80 d-block mx-auto my-4">
 
             As shown in the figure, subcircuits were extracted by designating input ports or registers as the starting points and output ports or registers as the endpoints. 
             In addition, when we extracted subcircuits, each subgraph was defined as the combination of all paths that share the same start and endpoints. 
@@ -253,7 +253,7 @@
             This edge is introduced because delays associated with net arcs directly impact gate sizing decisions.
             Finally, cell arc edge refers to pin connections within the same cell.
             
-            <img src="./Image/Table_1.png" alt="Table_1" class="img-fluid w-50 d-block mx-auto">
+            <img src="./Image/Table_1.png" alt="Table_1" class="img-fluid w-50 d-block mx-auto my-4">
 
             Also, we describe the features embedded in each cell and pin of the heterogeneous graph.
             Detailed information is provided in the Table. 
@@ -268,7 +268,7 @@
             Our proposed approach incorporates both topological and geometric circuit information to improve sizing performance.
             The following figure illustrates an overview of DPH-Sizer.
 
-            <img src="./Image/Flow.png" alt="Flow" class="img-fluid w-100">
+            <img src="./Image/Flow.png" alt="Flow" class="img-fluid w-90 d-block mx-auto my-4">
 
             <h5>Heterogeneous Graph</h5>
             
@@ -282,7 +282,7 @@
             Therefore, GAT, which assigns adaptive weights to neighbor nodes, is more suitable for gate sizing than GCN, which aggregates neighbors using fixed weights.
             The embedding update equation for the GAT is defined as follows:
 
-            <img src="./Image/Function_1.png" alt="Function_1" class="img-fluid w-50 d-block mx-auto">
+            <img src="./Image/Function_1.png" alt="Function_1" class="img-fluid w-50 d-block mx-auto my-4">
 
             Where 𝑒_𝑖𝑗 denotes the attention score between node 𝑖 and its neighbor node 𝑗, computed using input embeddings˜_ℎ_𝑖 and˜_ℎ_𝑗, a learnable attention parameter vector 𝑎, and the sigmoid activation function 𝜎, the normalized attention coefficient 𝛼_𝑖𝑗 is obtained by applying the softmax function to these attention scores, measuring the relative importance of node 𝑗 in updating node 𝑖’s embedding. The updated embedding ℎ′𝑖 for node 𝑖is calculated by concatenating the outputs from multiple attention heads, where each head 𝑘 employs a distinct learnable weight matrix 𝑊𝑘 and computes its attention coefficient 𝛼𝑘_𝑖𝑗. Here, 𝐾 represents the total number of attention heads, and N𝑖 denotes the set of neighbor nodes for node 𝑖. 
             With bidirectional edges, cell nodes connect via cell-to-pin and pin-to-cell edges; final cell embeddings are obtained by attention-weighted summation of embeddings from each edge type. 
@@ -321,7 +321,7 @@
             Since timing-driven sizing optimization may inadvertently increase leakage power, we explicitly incorporate a leakage power term into our loss function to guide the model toward balanced optimization of both timing and leakage.
             The proposed loss function is defined as follows:
 
-            <img src="./Image/Function_3.png" alt="Function_3" class="img-fluid w-50 d-block mx-auto">
+            <img src="./Image/Function_3.png" alt="Function_3" class="img-fluid w-50 d-block mx-auto my-4">
 
             By penalizing invalid size selections, the proposed loss function strongly discourages infeasible predictions during training.
             Additionally, by incorporating leakage power directly into the loss, the model naturally favors gate sizes with lower leakage when they provide similar accuracy.
