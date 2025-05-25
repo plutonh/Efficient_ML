@@ -264,6 +264,21 @@
 
           <img src="./Image/Function_1.png" alt="Function_1" class="img-fluid w-50 d-block mx-auto my-5">
 
+          <script type="math/tex; mode=display">
+          \mathbf{h}'_{i} = \bigg\Vert_{k=1}^{K} \sigma\!\Bigl(
+          \sum_{j \in \mathcal{N}_{i} \cup \{i\}}
+          \alpha^{k}_{ij}\,\mathbf{\omega}^{k}\mathbf{h}_{j}\Bigr)
+          </script>
+          
+          <script type="math/tex; mode=display">
+          a^{k}_{ij} =
+          \frac{\exp\!\bigl(\operatorname{LReLU}(
+          \mathbf{a}^{\top}[\mathbf{\omega}^{k}\mathbf{h}_{i}\,\Vert\,\mathbf{\omega}^{k}\mathbf{h}_{j}])\bigr)}
+          {\displaystyle\sum_{k \in \mathcal{N}_{i}\cup\{i\}}
+          \exp\!\bigl(\operatorname{LReLU}(
+          \mathbf{a}^{\top}[\mathbf{\omega}^{k}\mathbf{h}_{i}\,\Vert\,\mathbf{\omega}^{k}\mathbf{h}_{k}])\bigr)}
+          </script>
+
           <p>
             where \( h'_{i} \) and \( h_{i} \) are the old and new
             features of node \( v_{i} \); \( \lVert \) denotes concatenation,
@@ -277,7 +292,17 @@
         
         <section id="background_3">
           <h4>Machine learning framework with GNN-based embedding</h4>
-          <p>⋯ (write content here) ⋯</p>
+          <p>
+            We formulate a machine learning framework that leverages GNN-based embeddings as input to predict performance-related metrics as output. 
+            Several prior works have explored ML-based gate sizing, such as NVIDIA’s transformer-based approach [S. Nath et al., ICCAD 2022], 
+            which employs sequence modeling to predict gate sizes in an autoregressive manner, and RL-Sizer, which is the first to utilize GNNs for extracting states and actions within a Markov Decision Process. 
+            However, these methods face limitations due to their reliance on sequential representations or the constraints of reinforcement learning paradigms.
+          </p>
+
+          <p>
+            To address the challenges of the above ML-based model, we propose a transformer-based framework using GNN-derived embeddings.
+            Our method efficiently compensates locality agnosticism, which is a well-known transformer’s shortage, by utilizing the GNN's ability to encode local structural information through message passing.
+          </p>
         </section>
 
         <!-- ────────── Methods ────────── -->
@@ -474,351 +499,6 @@
                 </span>
                 <span class="ref-detail">
                   YC. Lu et al., <em>Proc. DAC</em> 2021.
-                </span>
-              </li>
-              
-
-              
-              <li>
-                <span class="ref-title">
-                  Gate sizing in MOS digital circuits with linear programming
-                </span>
-                <span class="ref-detail">
-                  MRCM. Berkelaar et al., <em>Proc. EDAC</em>, 1990.
-                </span>
-              </li>
-
-              <li>
-                <span class="ref-title">
-                  Linear programming for sizing, Vth and Vdd assignment
-                </span>
-                <span class="ref-detail">
-                  DG. Chinnery et al., <em>Proc. ISLPED</em>, 2005.
-                </span>
-              </li>
-              
-              <li>
-                <span class="ref-title">
-                  Gate Sizing For Cell Library-Based Designs
-                </span>
-                <span class="ref-detail">
-                  S. Hu et al., <em>Proc. DAC</em>, 2007.
-                </span>
-              </li>
-              
-              <li>
-                <span class="ref-title">
-                  A New Algorithm for Simultaneous Gate Sizing and Threshold Voltage Assignment
-                </span>
-                <span class="ref-detail">
-                  Y. Liu et al., <em>Proc. ISPD</em>, 2009.
-                </span>
-              </li>
-              
-              <li>
-                <span class="ref-title">
-                  Gate sizing and device technology selection algorithms for high-performance industrial designs
-                </span>
-                <span class="ref-detail">
-                  MM. Ozdal et al., <em>Proc. ICCAD</em>, 2011.
-                </span>
-              </li>
-              <li>
-                <span class="ref-title">
-                  JiffyTune: circuit optimization using time-domain sensitivities
-                </span>
-                <span class="ref-detail">
-                  G. Flach et al., <em>Proc. ISVLSI</em>, 2013.
-                </span>
-              </li>
-              
-              <li>
-                <span class="ref-title">
-                  Fast Lagrangian relaxation-based gate sizing using multi-threading
-                </span>
-                <span class="ref-detail">
-                  A. Sharma et al., <em>Proc. ICCAD</em>, 2012.
-                </span>
-              </li>
-              
-              <li>
-                <span class="ref-title">
-                  Fast and exact simultaneous gate and wire sizing by Lagrangian relaxation
-                </span>
-                <span class="ref-detail">
-                  CP. Chen et al., <em>in IEEE Transactions on Computer-Aided Design</em>, 1999.
-                </span>
-              </li>
-              
-              <li>
-                <span class="ref-title">
-                  Simultaneous Gate Sizing and Vth Assignment using Lagrangian Relaxation and Delay Sensitivities
-                </span>
-                <span class="ref-detail">
-                  G. Flach et al., <em>Proc. ISVLSI</em>, 2013.
-                </span>
-              </li>
-              
-              <li>
-                <span class="ref-title">
-                  Effective Method for Simultaneous Gate Sizing and Vth Assignment Using Lagrangian Relaxation
-                </span>
-                <span class="ref-detail">
-                  G. Flach et al., <em>in IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems</em>, 2014.
-                </span>
-              </li>
-              
-              <li>
-                <span class="ref-title">
-                  Fast Lagrangian Relaxation-Based Multithreaded Gate Sizing Using Simple Timing Calibrations
-                </span>
-                <span class="ref-detail">
-                  A. Sharma et al., <em>in IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems</em>, 2020.
-                </span>
-              </li>
-              
-              <li>
-                <span class="ref-title">
-                  Task-Based Parallel Programming for Gate Sizing
-                </span>
-                <span class="ref-detail">
-                  D. Mangiras et al., <em>in IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems</em>, 2023.
-                </span>
-              </li>
-              
-              <li>
-                <span class="ref-title">
-                  Integrating LR Gate Sizing in an Industrial Place-and-Route Flow
-                </span>
-                <span class="ref-detail">
-                  D. Chinnery et al., <em>Proc. ISPD</em> 2022.
-                </span>
-              </li>
-              
-              <li>
-                <span class="ref-title">
-                  Heterogeneous Graph Neural Network-Based Imitation Learning for Gate Sizing Acceleration
-                </span>
-                <span class="ref-detail">
-                  X. Zhou et al., <em>Proc. ICCAD</em> 2022.
-                </span>
-              </li>
-              
-              <li>
-                <span class="ref-title">
-                  AGD: A Learning-based Optimization Framework for EDA and its Application to Gate Sizing
-                </span>
-                <span class="ref-detail">
-                  X. Zhou et al., <em>Proc. DAC</em> 2023.
-                </span>
-              </li>
-              
-              <li>
-                <span class="ref-title">
-                  Learning-driven Physically-aware Large-scale Circuit Gate Sizing
-                </span>
-                <span class="ref-detail">
-                  Y. Ye et al., <em>in IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems</em>, 2024.
-                </span>
-              </li>
-              
-              <li>
-                <span class="ref-title">
-                  DAGSizer: A directed graph convolutional network approach to discrete gate sizing of VLSI graphs
-                </span>
-                <span class="ref-detail">
-                  CK. Cheng et al., <em>ACM Transactions on Design Automation of Electronic Systems</em> 2023.
-                </span>
-              </li>
-              
-              <li>
-                <span class="ref-title">
-                  Improving timing &amp; power trade-off in post-place optimization using multi-agent reinforcement learning
-                </span>
-                <span class="ref-detail">
-                  J. Seo et al., <em>Proc. ICCAD</em> 2024.
-                </span>
-              </li>
-              
-              <li>
-                <span class="ref-title">
-                  An Image is Worth 16×16 Words: Transformers for Image Recognition at Scale
-                </span>
-                <span class="ref-detail">
-                  A. Dosovitskiy et al., <em>Proc. ICLR</em> 2021.
-                </span>
-              </li>
-              
-              <li>
-                <span class="ref-title">
-                  Attention is all you need
-                </span>
-                <span class="ref-detail">
-                  Vaswani et al., <em>Proc. NeurIPS</em> 2017.
-                </span>
-              </li>
-              <li>
-                <span class="ref-title">
-                  Understanding Graphs in EDA: From Shallow to Deep Learning
-                </span>
-                <span class="ref-detail">
-                  Y. Ma et al., <em>Proc. ISPD</em> 2020.
-                </span>
-              </li>
-              
-              <li>
-                <span class="ref-title">
-                  Neural Message Passing for Quantum Chemistry
-                </span>
-                <span class="ref-detail">
-                  K. Yang et al., <em>Proc. ICML</em> 2017.
-                </span>
-              </li>
-              
-              <li>
-                <span class="ref-title">
-                  GraphSAGE: Inductive Representation Learning on Large Graphs
-                </span>
-                <span class="ref-detail">
-                  W. Hamilton et al., <em>Proc. NeurIPS</em> 2017.
-                </span>
-              </li>
-              
-              <li>
-                <span class="ref-title">
-                  DeepWalk: Online Learning of Social Representations
-                </span>
-                <span class="ref-detail">
-                  B. Perozzi et al., <em>Proc. KDD</em> 2014.
-                </span>
-              </li>
-              
-              <li>
-                <span class="ref-title">
-                  Gate sizing and device technology selection algorithms for high-performance industrial designs
-                </span>
-                <span class="ref-detail">
-                  MM. Ozdal et al., <em>Proc. ICCAD</em> 2011.
-                </span>
-              </li>
-              
-              <li>
-                <span class="ref-title">
-                  Graph attention networks
-                </span>
-                <span class="ref-detail">
-                  P. Velickovic et al., arXiv preprint arXiv:1710.10903 2017.
-                </span>
-              </li>
-              
-              <li>
-                <span class="ref-title">
-                  ParaGraph: Layout Parasitics and Device Parameter Prediction using Graph Neural Networks
-                </span>
-                <span class="ref-detail">
-                  H. Ren et al., <em>Proc. DAC</em> 2020.
-                </span>
-              </li>
-              
-              <li>
-                <span class="ref-title">
-                  A Fast Learning-Driven Signoff Power Optimization Framework
-                </span>
-                <span class="ref-detail">
-                  YC. Lu et al., <em>Proc. ICCAD</em> 2020.
-                </span>
-              </li>
-              
-              <li>
-                <span class="ref-title">
-                  GRANNITE: Graph Neural Network Inference for Transferable Power Estimation
-                </span>
-                <span class="ref-detail">
-                  Y. Zhang et al., <em>Proc. DAC</em> 2020.
-                </span>
-              </li>
-              
-              <li>
-                <span class="ref-title">
-                  Deep Residual Learning for Image Recognition
-                </span>
-                <span class="ref-detail">
-                  K. He et al., <em>Proc. CVPR</em> 2016.
-                </span>
-              </li>
-              
-              <li>
-                <span class="ref-title">
-                  AST: Audio Spectrogram Transformer
-                </span>
-                <span class="ref-detail">
-                  Y. Gong et al., <em>Proc. Interspeech</em> 2021.
-                </span>
-              </li>
-              
-              <li>
-                <span class="ref-title">
-                  SSAST: Self-Supervised Audio Spectrogram Transformer
-                </span>
-                <span class="ref-detail">
-                  Y. Gong et al., <em>Proc. ICASSP</em> 2022.
-                </span>
-              </li>
-              
-              <li>
-                <span class="ref-title">
-                  BEVFormer: Learning Bird’s-Eye-View Representation from Multi-Camera Images via Spatiotemporal Transformers
-                </span>
-                <span class="ref-detail">
-                  Z. Liu et al., <em>Proc. ECCV</em> 2022.
-                </span>
-              </li>
-              
-              <li>
-                <span class="ref-title">
-                  Transfuser: Imitation with Transformer-based Sensor Fusion for Autonomous Driving
-                </span>
-                <span class="ref-detail">
-                  A. Mehta et al., <em>Proc. CoRL</em> 2022.
-                </span>
-              </li>
-              
-              <li>
-                <span class="ref-title">
-                  PyTorch: An Imperative Style, High-Performance Deep Learning Library
-                </span>
-                <span class="ref-detail">
-                  A. Paszke et al., <em>Proc. NeurIPS</em> 2019.
-                </span>
-              </li>
-              
-              <li>
-                <span class="ref-title">
-                  Deep Graph Library: A Graph-Centric, Highly-Performant Package for Graph Neural Networks
-                </span>
-                <span class="ref-detail">
-                  M. Wang et al., <em>arXiv preprint arXiv:1909.01315</em>, 2019.
-                </span>
-              </li>
-              
-              <li>
-                <span class="ref-title">
-                  Opencores
-                </span>
-                <span class="ref-detail">
-                  <em>https://opencores.org</em>
-                </span>
-              </li>
-
-              <li>
-                <span class="ref-title">
-                  Synopsys Design Compiler v18.06 User Guide
-                </span>
-              </li>
-              
-              <li>
-                <span class="ref-title">
-                  Cadence Innovus Implementation System v21.16 User Guide
                 </span>
               </li>
            </ol>
