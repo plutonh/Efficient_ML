@@ -149,8 +149,8 @@
             <a href="#background">Background</a>
             <ul>
               <li><a href="#background_1">Gate Sizing Problems</a></li>
-              <li><a href="#background_2">Graph Representation Method for Gate Sizing</a></li>
-              <li><a href="#background_3">Predictor based on GNN-enhanced Transformer</a></li>
+              <li><a href="#background_2">Graph Representation Method</a></li>
+              <li><a href="#background_3">Machine learning framework with GNN-based embedding</a></li>
             </ul>
           </li>
           
@@ -187,6 +187,9 @@
             Although P&R could physically produce a layout with an optimization process, it is an NP-hard problem that can optimize the layout considering various metrics for improvement.
             Particularly in the gate size optimization problem, researchers couldn’t find a feasible algorithmic method, even if they suggested various adequate methods for several decades. 
             Thus, ML has emerged as a promising direction for discovering more effective optimization strategies in gate sizing.
+          </p>
+
+          <p>
             We present an ML-driven approach that aims to solve the gate sizing problem with improved efficiency and scalability.
           </p>
         </section>
@@ -221,18 +224,34 @@
         <section id="background_2">
           <h4>Graph Representation Method</h4>
           <p>
-            Graph representation methods are widely used when the connection information between components is essential, such as circuit design, social networks, and molecular modeling.
-            Encoding the above data as graphs enables the structure to contain connectivity information so that learning based methods, such as Graph Neural Networks (GNNs), can be effectively leveraged.
+            Graph representation methods are widely used when the connection information between components is essential, such as circuit design, social networks, and molecular modeling. 
+            Encoding the above data as graphs enables the structure to contain connectivity information so that learning based methods, such as Graph Neural Networks (GNNs), can be effectively leveraged. 
             For example, Google’s graph-based placement methodology [Mirhoseini et al., Nature 2021] successfully applied GNNs to netlist graphs for chip floorplanning.
+
           </p>
+
+          <img src="./Image/Method.png" alt="Method" class="img-fluid w-80 d-block mx-auto my-5">
           
           <p>
-            Motivated by these successes, we adopt a graph-based representation of a circuit by viewing gate-level netlists as a graph with embedded features, enabling effective application of learning-based optimization techniques to the gate sizing problem.
+            Motivated by these approaches, we adopt a graph-based representation of a circuit by viewing gate-level netlists as a graph with embedded features, enabling practical application of learning-based optimization techniques to the gate sizing problem.
           </p>
+
+          <p>
+            To construct the graph representation of the gate-level netlist, we utilize GNN-based embedding. 
+            While various architectures such as GCN, GraphSAGE, and GAT could be employed for this purpose, we specifically adopt the GAT structure to address the over-smoothing problem commonly observed in deep neural networks.
+            For each K-head GAT layer, it can be formulated as follows:
+          </p>
+
+          <img src="./Image/Function_1.png" alt="Function_1" class="img-fluid w-50 d-block mx-auto my-5">
+
+          <p>
+            where h′_i and h_i are the old and new features of node v_i, ∥ denotes concatenation, αk_ij are normalized attention coefficients computed by the k-th attention mechanism and · _T denotes transposition, ω_k is the corresponding input linear transformation’s weight matrix, Ni denotes the neighbor of node v_i.
+          </p>
+          
         </section>
         
         <section id="background_3">
-          <h4>Predictor based on GNN-enhanced Transformer</h4>
+          <h4>Machine learning framework with GNN-based embedding</h4>
           <p>⋯ (write content here) ⋯</p>
         </section>
 
@@ -306,7 +325,7 @@
             The embedding update equation for the GAT is defined as follows:
           </p>
           
-          <img src="./Image/Function_1.png" alt="Function_1" class="img-fluid w-40 d-block mx-auto my-5">
+          <img src="./Image/Function_2.png" alt="Function_2" class="img-fluid w-40 d-block mx-auto my-5">
 
           <p>
             Where 𝑒_𝑖𝑗 denotes the attention score between node 𝑖 and its neighbor node 𝑗, computed using input embeddings˜_ℎ_𝑖 and˜_ℎ_𝑗, a learnable attention parameter vector 𝑎, and the sigmoid activation function 𝜎, the normalized attention coefficient 𝛼_𝑖𝑗 is obtained by applying the softmax function to these attention scores, measuring the relative importance of node 𝑗 in updating node 𝑖’s embedding. The updated embedding ℎ′𝑖 for node 𝑖is calculated by concatenating the outputs from multiple attention heads, where each head 𝑘 employs a distinct learnable weight matrix 𝑊𝑘 and computes its attention coefficient 𝛼𝑘_𝑖𝑗. Here, 𝐾 represents the total number of attention heads, and N𝑖 denotes the set of neighbor nodes for node 𝑖. 
@@ -326,7 +345,7 @@
             Without positional encoding, the transformer is unable to differentiate among node types or capture their topological and spatial relationships within the graph.
           </p>
           
-          <img src="./Image/Function_2.png" alt="Function_2" class="img-fluid w-20 d-block mx-auto my-5">
+          <img src="./Image/Function_3.png" alt="Function_3" class="img-fluid w-20 d-block mx-auto my-5">
 
           <p>
             Following two successive HeteroGAT layers, cell and pin embeddings individually reside in R^(𝐵×𝑁𝑐 ×𝐹𝑜) and R^(𝐵×𝑁𝑝 ×𝐹𝑜), respectively.
@@ -351,7 +370,7 @@
             The proposed loss function is defined as follows:
           </p>
           
-          <img src="./Image/Function_3.png" alt="Function_3" class="img-fluid w-50 d-block mx-auto my-5">
+          <img src="./Image/Function_4.png" alt="Function_4" class="img-fluid w-50 d-block mx-auto my-5">
           
           <p>
             By penalizing invalid size selections, the proposed loss function strongly discourages infeasible predictions during training.
@@ -747,6 +766,15 @@
                   M. Wang et al., <em>arXiv preprint arXiv:1909.01315</em>, 2019.
                 </span>
               </li>
+
+              <li>
+                <span class="ref-title">
+                  A Graph Placement Methodology for Fast Chip Design
+                </span>
+                <span class="ref-detail">
+                  A. Mirhoseini et al.,<em>Nature 594, pp. 207-212.</em> 2021.
+                </span>
+              </li>
               
               <li>
                 <span class="ref-title">
@@ -756,7 +784,7 @@
                   <em>https://opencores.org</em>
                 </span>
               </li>
-              
+
               <li>
                 <span class="ref-title">
                   Synopsys Design Compiler v18.06 User Guide
