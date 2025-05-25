@@ -94,7 +94,7 @@
     .w-80{ width:80% !important; }
     .w-90{ width:90% !important; }
 
-    .eq-big{ font-size:1.3rem; } 
+    .eq-big{ font-size:1.1rem; } 
 
   </style>
 </head>
@@ -252,7 +252,19 @@
 
           </p>
 
-          <img src="./Image/Method.png" alt="Method" class="img-fluid w-100 d-block mx-auto my-5">
+          <figure style="text-align:center;">
+            <img src="./Image/Method.png""
+                 alt="Method"
+                 class="img-fluid" style="max-width:75%;">
+          
+            <figcaption style="font-size:0.9rem; margin-top:0.75rem;">
+              <strong>Figure&nbsp;1.</strong> Illustration of emerging visual properties in toddlers.
+              <span class="d-block">
+                A: Caricature recognition. B: Shape bias. C: Preferred views. D: Configural sensitivity.
+                Green rectangles (A, B) indicate … Blue rectangle (C) … Red rectangle (D) …
+              </span>
+            </figcaption>
+          </figure>
           
           <p>
             Motivated by these approaches, we adopt a graph-based representation of a circuit by viewing gate-level netlists as a graph with embedded features, 
@@ -282,11 +294,10 @@
                   a^{k}_{ij} =
                   \frac{\exp\!\bigl(\operatorname{LReLU}(a^{\top}[\omega^{k}h_{i}\Vert\omega^{k}h_{j}]))}
                        {\displaystyle\sum_{k\in\mathcal{N}_{i}\cup\{i\}}
-                        \exp\!\bigl(\operatorname{LReLU}(a^{\top}[\omega^{k}h_{i}\Vert\omega^{k}h_{k}]))}
+                        \exp\!\bigl(\operatorname{LReLU}(a^{\top}[\omega^{k}h_{i}\Vert\omega^{k}h_{k}]))} <a class="cite" href="#ref-2" id="c-2"></a>
                 }
               \]
             </div>
-            <a class="cite" href="#ref-2" id="c-2"></a>
           </p>
           
         </section>
