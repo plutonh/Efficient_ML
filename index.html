@@ -94,6 +94,8 @@
     .w-80{ width:80% !important; }
     .w-90{ width:90% !important; }
 
+    .eq-big{ font-size:1.3rem; } 
+
   </style>
 </head>
 <body>
@@ -266,29 +268,25 @@
           <img src="./Image/Function_1.png" alt="Function_1" class="img-fluid w-50 d-block mx-auto my-5">
 
           <p>
-            \[
-            \mathbf{h}'_{i} \;=\;
-            \bigg\Vert_{k=1}^{K}
-            \; \sigma\!\Bigl(
-                \sum_{j \in \mathcal{N}_{i} \cup \{i\}}
-                \alpha^{k}_{ij}\,\mathbf{\omega}^{k}\mathbf{h}_{j}
-            \Bigr)
-            \]
+            <div class="eq-big">
+              \[
+                {\Large
+                  h'_{i} = \bigg\Vert_{k=1}^{K}
+                  \sigma\!\Bigl(\sum_{j\in\mathcal{N}_{i}\cup\{i\}}
+                  \alpha^{k}_{ij}\,\omega^{k}h_{j}\Bigr)
+                }
+              \]
             
-            \[
-            a^{k}_{ij} \;=\;
-            \frac{\displaystyle
-                  \exp\!\bigl(\operatorname{LReLU}\bigl(
-                      \mathbf{a}^{\top}[\mathbf{\omega}^{k}\mathbf{h}_{i}\,\Vert\,\mathbf{\omega}^{k}\mathbf{h}_{j}]
-                  \bigr)\bigr)
-                 }
-                 {\displaystyle
-                  \sum_{k \in \mathcal{N}_{i}\cup\{i\}}
-                  \exp\!\bigl(\operatorname{LReLU}\bigl(
-                      \mathbf{a}^{\top}[\mathbf{\omega}^{k}\mathbf{h}_{i}\,\Vert\,\mathbf{\omega}^{k}\mathbf{h}_{k}]
-                  \bigr)\bigr)
-                 }
-            \]
+              \[
+                {\Large
+                  a^{k}_{ij} =
+                  \frac{\exp\!\bigl(\operatorname{LReLU}(a^{\top}[\omega^{k}h_{i}\Vert\omega^{k}h_{j}]))}
+                       {\displaystyle\sum_{k\in\mathcal{N}_{i}\cup\{i\}}
+                        \exp\!\bigl(\operatorname{LReLU}(a^{\top}[\omega^{k}h_{i}\Vert\omega^{k}h_{k}]))}
+                }
+              \]
+            </div>
+            <a class="cite" href="#ref-2" id="c-2"></a>
           </p>
           
         </section>
@@ -298,7 +296,7 @@
           <p>
             We formulate a machine learning framework that leverages GNN-based embeddings as input to predict performance-related metrics as output. 
             Several prior works have explored ML-based gate sizing, such as NVIDIA’s transformer-based approach
-            <a class="cite" href="#ref-2" id="c-2"></a>,
+            <a class="cite" href="#ref-3" id="c-3"></a>,
             which employs sequence modeling to predict gate sizes in an autoregressive manner, and RL-Sizer, which is the first to utilize GNNs for extracting states and actions within a Markov Decision Process. 
             However, these methods face limitations due to their reliance on sequential representations or the constraints of reinforcement learning paradigms.
           </p>
