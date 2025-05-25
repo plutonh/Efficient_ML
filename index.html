@@ -95,6 +95,16 @@
     .w-90{ width:90% !important; }
 
     .eq-big{ font-size:0.9rem; }
+    .eq-block{
+      text-align:center;
+      margin:1.5rem 0;
+    }
+    .eq-wrap{ display:inline-block; }
+    .eq-block .cite{
+      display:inline-block;
+      vertical-align:top; 
+      margin-left:0.4rem;
+    }
     .fig-label{ display:block; font-weight:600; }
 
   </style>
@@ -279,26 +289,32 @@
           </p>
 
           <p>
-            <div class="eq-big">
-              \[
-                {\Large
-                  h'_{i} = \bigg\Vert_{k=1}^{K}
-                  \sigma\!\Bigl(\sum_{j\in\mathcal{N}_{i}\cup\{i\}}
-                  \alpha^{k}_{ij}\,\omega^{k}h_{j}\Bigr)
-                }
-              \]
-            
-              \[
-                {\Large
-                  a^{k}_{ij} =
-                  \frac{\exp\!\bigl(\operatorname{LReLU}(a^{\top}[\omega^{k}h_{i}\Vert\omega^{k}h_{j}]))}
-                       {\displaystyle\sum_{k\in\mathcal{N}_{i}\cup\{i\}}
-                        \exp\!\bigl(\operatorname{LReLU}(a^{\top}[\omega^{k}h_{i}\Vert\omega^{k}h_{k}]))}
-                }
-              \] <a class="cite" href="#ref-2" id="c-2"></a>
+            <div class="eq-block">
+              <span class="eq-wrap">
+                \[
+                  {\Large
+                    h'_{i} = \bigg\Vert_{k=1}^{K}
+                    \sigma\!\Bigl(\sum_{j\in\mathcal{N}_{i}\cup\{i\}}
+                    \alpha^{k}_{ij}\,\omega^{k}h_{j}\Bigr)
+                  }
+                \]
+              </span>
+            </div>
+
+            <div class="eq-block">
+              <span class="eq-wrap">
+                \[
+                  {\Large
+                    a^{k}_{ij} =
+                    \frac{\exp\!\bigl(\operatorname{LReLU}(a^{\top}[\omega^{k}h_{i}\Vert\omega^{k}h_{j}]))}
+                         {\displaystyle\sum_{k\in\mathcal{N}_{i}\cup\{i\}}
+                          \exp\!\bigl(\operatorname{LReLU}(a^{\top}[\omega^{k}h_{i}\Vert\omega^{k}h_{k}]))}
+                  }
+                \]
+              </span>
+              <a class="cite" href="#ref-2" id="c-2"></a>
             </div>
           </p>
-          
         </section>
         
         <section id="background_3">
