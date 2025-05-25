@@ -253,7 +253,8 @@
           <img src="./Image/Method.png" alt="Method" class="img-fluid w-100 d-block mx-auto my-5">
           
           <p>
-            Motivated by these approaches, we adopt a graph-based representation of a circuit by viewing gate-level netlists as a graph with embedded features, enabling practical application of learning-based optimization techniques to the gate sizing problem.
+            Motivated by these approaches, we adopt a graph-based representation of a circuit by viewing gate-level netlists as a graph with embedded features, 
+            enabling practical application of learning-based optimization techniques to the gate sizing problem.
           </p>
 
           <p>
@@ -294,7 +295,8 @@
           <h4>Machine learning framework with GNN-based embedding</h4>
           <p>
             We formulate a machine learning framework that leverages GNN-based embeddings as input to predict performance-related metrics as output. 
-            Several prior works have explored ML-based gate sizing, such as NVIDIA’s transformer-based approach [S. Nath et al., ICCAD 2022], 
+            Several prior works have explored ML-based gate sizing, such as NVIDIA’s transformer-based approach
+            <a class="cite" href="#ref-2" id="c-2"></a>,
             which employs sequence modeling to predict gate sizes in an autoregressive manner, and RL-Sizer, which is the first to utilize GNNs for extracting states and actions within a Markov Decision Process. 
             However, these methods face limitations due to their reliance on sequential representations or the constraints of reinforcement learning paradigms.
           </p>
@@ -471,24 +473,24 @@
                   A. Mirhoseini et al.,<em>Nature 594, pp. 207-212.</em> 2021.
                 </span>
               </li>
-              
+
               <li id="ref-2">
                 <a href="#c-2" class="back">↩︎</a>
-                <span class="ref-title">
-                  A Neural Architecture Predictor based on GNN-Enhanced Transformer
-                </span>
-                <span class="ref-detail">
-                  X. Xiang et al., <em>Proc. AISTATS</em> 2024.
-                </span>
-              </li>
-
-              <li id="ref-3">
-                <a href="#c-3" class="back">↩︎</a>
                 <span class="ref-title">
                   TransSizer: A Novel Transformer-Based Fast Gate Sizer
                 </span>
                 <span class="ref-detail">
                   S. Nath et al., <em>Proc. ICCAD</em> 2022.
+                </span>
+              </li>
+              
+              <li id="ref-3">
+                <a href="#c-3" class="back">↩︎</a>
+                <span class="ref-title">
+                  A Neural Architecture Predictor based on GNN-Enhanced Transformer
+                </span>
+                <span class="ref-detail">
+                  X. Xiang et al., <em>Proc. AISTATS</em> 2024.
                 </span>
               </li>
 
