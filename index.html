@@ -265,28 +265,30 @@
 
           <img src="./Image/Function_1.png" alt="Function_1" class="img-fluid w-50 d-block mx-auto my-5">
 
-          <script type="math/tex; mode=display">
-          \mathbf{h}'_{i} = \bigg\Vert_{k=1}^{K} \sigma\!\Bigl(
-          \sum_{j \in \mathcal{N}_{i} \cup \{i\}}
-          \alpha^{k}_{ij}\,\mathbf{\omega}^{k}\mathbf{h}_{j}\Bigr)
-          </script>
-          
-          <script type="math/tex; mode=display">
-          a^{k}_{ij} =
-          \frac{\exp\!\bigl(\operatorname{LReLU}(
-          \mathbf{a}^{\top}[\mathbf{\omega}^{k}\mathbf{h}_{i}\,\Vert\,\mathbf{\omega}^{k}\mathbf{h}_{j}])\bigr)}
-          {\displaystyle\sum_{k \in \mathcal{N}_{i}\cup\{i\}}
-          \exp\!\bigl(\operatorname{LReLU}(
-          \mathbf{a}^{\top}[\mathbf{\omega}^{k}\mathbf{h}_{i}\,\Vert\,\mathbf{\omega}^{k}\mathbf{h}_{k}])\bigr)}
-          </script>
-
           <p>
-            where \( h'_{i} \) and \( h_{i} \) are the old and new
-            features of node \( v_{i} \); \( \lVert \) denotes concatenation,
-            \( \alpha^{(k)}_{ij} \) are normalized attention coefficients computed by
-            the \( k \)-th attention mechanism, \( {}^{\top} \) denotes transposition,
-            \( \omega_{k} \) is the input-linear-transformation weight matrix,
-            and \( \mathcal{N}_{i} \) denotes the neighbor set of node \( v_{i} \).
+            \[
+            \mathbf{h}'_{i} \;=\;
+            \bigg\Vert_{k=1}^{K}
+            \; \sigma\!\Bigl(
+                \sum_{j \in \mathcal{N}_{i} \cup \{i\}}
+                \alpha^{k}_{ij}\,\mathbf{\omega}^{k}\mathbf{h}_{j}
+            \Bigr)
+            \]
+            
+            \[
+            a^{k}_{ij} \;=\;
+            \frac{\displaystyle
+                  \exp\!\bigl(\operatorname{LReLU}\bigl(
+                      \mathbf{a}^{\top}[\mathbf{\omega}^{k}\mathbf{h}_{i}\,\Vert\,\mathbf{\omega}^{k}\mathbf{h}_{j}]
+                  \bigr)\bigr)
+                 }
+                 {\displaystyle
+                  \sum_{k \in \mathcal{N}_{i}\cup\{i\}}
+                  \exp\!\bigl(\operatorname{LReLU}\bigl(
+                      \mathbf{a}^{\top}[\mathbf{\omega}^{k}\mathbf{h}_{i}\,\Vert\,\mathbf{\omega}^{k}\mathbf{h}_{k}]
+                  \bigr)\bigr)
+                 }
+            \]
           </p>
           
         </section>
@@ -477,16 +479,6 @@
               <li id="ref-2">
                 <a href="#c-2" class="back">↩︎</a>
                 <span class="ref-title">
-                  TransSizer: A Novel Transformer-Based Fast Gate Sizer
-                </span>
-                <span class="ref-detail">
-                  S. Nath et al., <em>Proc. ICCAD</em> 2022.
-                </span>
-              </li>
-              
-              <li id="ref-3">
-                <a href="#c-3" class="back">↩︎</a>
-                <span class="ref-title">
                   A Neural Architecture Predictor based on GNN-Enhanced Transformer
                 </span>
                 <span class="ref-detail">
@@ -494,6 +486,16 @@
                 </span>
               </li>
 
+              <li id="ref-3">
+                <a href="#c-3" class="back">↩︎</a>
+                <span class="ref-title">
+                  TransSizer: A Novel Transformer-Based Fast Gate Sizer
+                </span>
+                <span class="ref-detail">
+                  S. Nath et al., <em>Proc. ICCAD</em> 2022.
+                </span>
+              </li>
+              
               <li id="ref-4">
                 <a href="#c-4" class="back">↩︎</a>
                 <span class="ref-title">
