@@ -143,13 +143,13 @@
             <ul>
               <li><a href="#background_1">Gate Sizing Problems</a></li>
               <li><a href="#background_2">Graph Representation Method for Gate Sizing</a></li>
-              <li><a href="#background_3">Gate Sizing with ML</a></li>
+              <li><a href="#background_3">Predictor based on GNN-enhanced Transformer</a></li>
             </ul>
           </li>
           
           <li><a href="#methods">Methods</a>
             <ul>
-              <li><a href="#methods_1">Graph Representation + feature embedding</a></li>
+              <li><a href="#methods_1">Graph Representation and feature embedding</a></li>
               <li><a href="#methods_2">Model Architecture</a></li>
               <li><a href="#methods_3">Loss Function</a></li>
             </ul>
@@ -177,17 +177,24 @@
           <hr class="section-divider">
           <p>
             Chip placement and routing (P&R) is the engineering task of designing the physical layout of a computer chip. 
-            Although P&R could physically produce a layout with an optimization process, it is an NP-hard problem that can optimize the layout considering various metrics for improvement. 
+            Although P&R could physically produce a layout with an optimization process, it is an NP-hard problem that can optimize the layout considering various metrics for improvement.
             Particularly in the gate size optimization problem, researchers couldn’t find a feasible algorithmic method, even if they suggested various adequate methods for several decades. 
-            Thus, AI has emerged as a compelling direction for identifying better optimization strategies in gate sizing.
+            Thus, ML has emerged as a promising direction for discovering more effective optimization strategies in gate sizing.
+            We present an ML-driven approach that aims to solve the gate sizing problem with improved efficiency and scalability.
           </p>
         </section>
         
         <section id="background_1">
           <h4>Gate Sizing Problems</h4>
           <p>
-            Gate sizing has long been explored as a technique for optimizing performance, power, and area (PPA) of the circuit by assigning the appropriate gate size to each cell from the available library candidates. 
-            A cell is a basic unit in a gate-level netlist, which serves to represent a digital chip during the placement and routing (P&R) process.
+            Gate sizing has long been explored as a technique for optimizing the circuit's performance, power, and area (PPA) by assigning the appropriate gate size to each cell from the available library candidates.
+            For standard cells with identical functionality, increasing the cell size typically enhances drive strength, reducing intrinsic delay but leading to higher leakage power and larger area. 
+            
+            Thus, standard practice involves upsizing cells along timing-critical paths, while downsizing non-critical cells to optimize the overall design metrics.
+            However, indiscriminately following this approach may cause problems because gate sizing decisions are not purely local.
+            For example, upsizing a cell experiencing a setup timing violation can reduce its intrinsic delay and resolve downstream timing issues.
+            Nevertheless, this upsizing simultaneously increases the cell’s input capacitance, imposing a higher load on its driver cell and thereby potentially increasing the delay of upstream stages.
+            Consequently, this can introduce or exacerbate timing violations in preceding stages.
             
             <ul class="dash-list">
               <li>Technical definition of gate sizing (with Figure)</li>
@@ -199,15 +206,18 @@
         </section>
 
         <section id="background_2">
-          <h4>Graph Representation Method for Gate Sizing</h4>
+          <h4>Graph Representation Method</h4>
           <p>
-            We can see the gate-level netlist as a large graph with embedded features.
-            Representing circuits as graphs is an efficient way to deal with gate sizing problems using several optimization methods.
+            Graph representation methods are widely used when the connection information between components is essential, such as circuit design, social networks, and molecular modeling.
+            Encoding the above data as graphs enables the structure to contain connectivity information so that learning based methods, such as Graph Neural Networks (GNNs), can be effectively leveraged.
+            For example, Google’s graph-based placement methodology [Mirhoseini et al., Nature 2021] successfully applied GNNs to netlist graphs for chip floorplanning.
+            
+            Motivated by these successes, we adopt a graph-based representation of a circuit by viewing gate-level netlists as a graph with embedded features, enabling effective application of learning-based optimization techniques to the gate sizing problem.
           </p>
         </section>
         
         <section id="background_3">
-          <h4>Gate Sizing with ML</h4>
+          <h4>Predictor based on GNN-enhanced Transformer</h4>
           <p>⋯ (write content here) ⋯</p>
         </section>
 
@@ -216,15 +226,36 @@
           <h1>Methods</h1>
           <hr class="section-divider">
           <p>
-            In this section, we introduce our gate sizing framework, which leverages a heterogeneous graph attention network combined with transformer encoder layers. 
+            In this section, we introduce our gate sizing framework, which leverages a heterogeneous graph attention network combined with transformer encoder layers.
             We explain how the netlist is represented as a graph with embedded features, detail the architecture used for size prediction, and describe the design of our loss function.
           </p>
         </section>
 
         <section id="methods_1">
-          <h4>Graph Representation + feature embedding</h4>
+          <h4>Graph Representation and feature embedding</h4>
           <p>
+            We first partition the circuit into smaller subcircuits to simplify the circuit for efficient modeling.
+            Each subcircuit is defined by designating input ports or registers as starting points and output ports or registers as endpoints. 
+            Specifically, a subcircuit combines all paths sharing the same start and endpoints. 
+            Thus, we propose a heterogeneous graph model that effectively captures the intrinsic structure of the circuit by delineating its two fundamental node types: pins and cells, as depicted in Fig. 2.
+            
             <img src="./Image/HeteroGraph.png" alt="Hetero_Graph" class="img-fluid w-100">
+
+            As shown in the figure, subcircuits were extracted by designating input ports or registers as the starting points and output ports or registers as the endpoints. 
+            In addition, when we extracted subcircuits, each subgraph was defined as the combination of all paths that share the same start and endpoints. 
+            These methods allow for better sizing by including connectivity information between cells that traditional sequence modeling does not have.
+
+            Based on the extracted circuit information, nodes are assigned two types: pins and cells.
+            Edges are classified into three categories according to their connectivity. 
+            The first edge type is the gate arc edge, which is the connection between a cell and its corresponding pin.
+            During the gate sizing process, subtle changes in the slew and arrival time of each pin can significantly influence size decisions for the corresponding cell.
+            To capture this relationship, a gate arc edge is introduced. The second edge type is the net arc edge, which represents connections between pins of different cells.
+            This edge is introduced because delays associated with net arcs directly impact gate sizing decisions.
+            Finally, cell arc edge refers to pin connections within the same cell.
+
+            <img src="./Image/HeteroGraph.png" alt="Hetero_Graph" class="img-fluid w-100">
+
+            
           </p>
         </section>
 
