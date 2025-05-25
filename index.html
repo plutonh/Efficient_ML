@@ -94,7 +94,7 @@
     .w-80{ width:80% !important; }
     .w-90{ width:90% !important; }
 
-    .eq-big{ font-size:1.1rem; }
+    .eq-big{ font-size:1.0rem; }
     .fig-label{ display:block; font-weight:600; }
 
   </style>
@@ -276,8 +276,6 @@
             While various architectures such as GCN, GraphSAGE, and GAT could be employed for this purpose, we specifically adopt the GAT structure to address the over-smoothing problem commonly observed in deep neural networks.
             For each K-head GAT layer, it can be formulated as follows:
           </p>
-
-          <img src="./Image/Function_1.png" alt="Function_1" class="img-fluid w-50 d-block mx-auto my-5">
 
           <p>
             <div class="eq-big">
@@ -462,8 +460,6 @@
             In graph-based tasks, this is particularly important because the relationships between nodes are not inherently ordered, unlike in sequence-based tasks like NLP.
             Without positional encoding, the transformer is unable to differentiate among node types or capture their topological and spatial relationships within the graph.
           </p>
-          
-          <img src="./Image/Function_3.png" alt="Function_3" class="img-fluid w-20 d-block mx-auto my-5">
 
           <p>
             <div class="eq-big">
@@ -498,8 +494,6 @@
             The proposed loss function is defined as follows:
           </p>
           
-          <img src="./Image/Function_4.png" alt="Function_4" class="img-fluid w-60 d-block mx-auto my-5">
-
           <p>
             <div class="eq-big">
               \[
