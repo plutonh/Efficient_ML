@@ -150,7 +150,7 @@
           <li><a href="#methods">Methods</a>
             <ul>
               <li><a href="#methods_1">Graph Representation and feature embedding</a></li>
-              <li><a href="#methods_2">Model Architecture</a></li>
+              <li><a href="#methods_2">Model Architecture (HeteroGAT and Transformer)</a></li>
               <li><a href="#methods_3">Loss Function</a></li>
             </ul>
           </li>
@@ -252,28 +252,92 @@
             To capture this relationship, a gate arc edge is introduced. The second edge type is the net arc edge, which represents connections between pins of different cells.
             This edge is introduced because delays associated with net arcs directly impact gate sizing decisions.
             Finally, cell arc edge refers to pin connections within the same cell.
-
-            <img src="./Image/HeteroGraph.png" alt="Hetero_Graph" class="img-fluid w-100">
-
             
+            <img src="./Image/Table_1.png" alt="Table_1" class="img-fluid w-50 d-block mx-auto">
+
+            Also, we describe the features embedded in each cell and pin of the heterogeneous graph.
+            Detailed information is provided in the Table. 
+            We extracted physical and timing information from the circuits and embedded these features into each pin and cell node.
+            The features embedded in the cell nodes are denoted as 𝑓cell, while those in the pin nodes are denoted as 𝑓pin.
           </p>
         </section>
 
         <section id="methods_2">
-          <h4>Model Architecture</h4>
-          <p>⋯ (write content here) ⋯</p>
+          <h4>Model Architecture (HeteroGAT and Transformer)</h4>
+          <p>
+            Our proposed approach incorporates both topological and geometric circuit information to improve sizing performance.
+            The following figure illustrates an overview of DPH-Sizer.
+
+            <img src="./Image/Flow.png" alt="Flow" class="img-fluid w-100">
+
+            <h5>Heterogeneous Graph</h5>
+            
+            Unlike prior approaches that treat pins and cells as a single entity, we explicitly represent them as separate nodes in a heterogeneous graph for gate sizing. 
+            This separation provides two key advantages.
+            First, it effectively captures interactions between driver and receiver pins connected through nets; for instance, upsizing a cell increases the load on its driver cell’s output pin, impacting neighboring cells.
+            Second, it allows the model to explicitly learn the relationship between cells and pins, such as variations in input pin capacitance and output drive strength due to cell resizing.
+            Moreover, as previously noted, GAT helps mitigate the over-smoothing problem.
+            Another motivation for adopting GAT is that, in gate sizing, not all input cells are equally influential.
+            Typically, the driver cell with the worst delay has the most significant impact on sizing decisions.
+            Therefore, GAT, which assigns adaptive weights to neighbor nodes, is more suitable for gate sizing than GCN, which aggregates neighbors using fixed weights.
+            The embedding update equation for the GAT is defined as follows:
+
+            <img src="./Image/Function_1.png" alt="Function_1" class="img-fluid w-50 d-block mx-auto">
+
+            Where 𝑒_𝑖𝑗 denotes the attention score between node 𝑖 and its neighbor node 𝑗, computed using input embeddings˜_ℎ_𝑖 and˜_ℎ_𝑗, a learnable attention parameter vector 𝑎, and the sigmoid activation function 𝜎, the normalized attention coefficient 𝛼_𝑖𝑗 is obtained by applying the softmax function to these attention scores, measuring the relative importance of node 𝑗 in updating node 𝑖’s embedding. The updated embedding ℎ′𝑖 for node 𝑖is calculated by concatenating the outputs from multiple attention heads, where each head 𝑘 employs a distinct learnable weight matrix 𝑊𝑘 and computes its attention coefficient 𝛼𝑘_𝑖𝑗. Here, 𝐾 represents the total number of attention heads, and N𝑖 denotes the set of neighbor nodes for node 𝑖. 
+            With bidirectional edges, cell nodes connect via cell-to-pin and pin-to-cell edges; final cell embeddings are obtained by attention-weighted summation of embeddings from each edge type. 
+            However, pin nodes are connected through both cell-to-pin, pin-to-pin, and pin-to-cell edges. 
+            Therefore, pin node embeddings are obtained by an attention-weighted sum of embeddings from three edge types.
+
+            <h5>Transformer</h5>
+            
+            Although the above graph structure effectively captures the topological information of circuits, it primarily employs attention mechanisms focused on the local neighborhood of nodes. 
+            Consequently, it captures structural characteristics only within a relatively narrow scope.
+            To address this limitation and incorporate global geometric structures and long-range dependencies within circuits, we integrate a transformer into our framework.
+            However, transformers inherently lack the ability to capture positional information among elements unless such information is explicitly provided.
+            In graph-based tasks, this is particularly important because the relationships between nodes are not inherently ordered, unlike in sequence-based tasks like NLP.
+            Without positional encoding, the transformer is unable to differentiate among node types or capture their topological and spatial relationships within the graph.
+
+            <img src="./Image/Function_2.png" alt="Function_2" class="img-fluid w-50 d-block mx-auto">
+            
+            Following two successive HeteroGAT layers, cell and pin embeddings individually reside in R^(𝐵×𝑁𝑐 ×𝐹𝑜) and R^(𝐵×𝑁𝑝 ×𝐹𝑜), respectively.
+            We concatenate both embeddings to form the input to the positional encoder, fully leveraging the extracted node representations.
+            Given an input embedding sequence 𝑋 ∈R^(𝐵×𝐿×𝑑_model) and a learnable positional encoding matrix 𝑃 ∈R^(1×𝐿_max × 𝑑_model), the output embedding 𝑋′with positional encoding is defined by adding the positional encoding to the input embeddings.
+            Where 𝐵 denotes the batch size, 𝐿= 𝑁𝑐+𝑁𝑝 is the total number of nodes, and 𝑑model represents the embedding dimension.
+            The positional encoding matrix 𝑃 is optimized jointly with the transformer parameters, enabling the model to learn meaningful positional information of the nodes adaptively.
+          </p>
         </section>
         
         <section id="methods_3">
           <h4>Loss Function</h4>
-          <p>⋯ (write content here) ⋯</p>
+          <p>
+            We formulate the gate sizing problem as a node classification task.
+            One challenge in formulating gate sizing as a classification task is that each gate has different size limits.
+            This constraint sometimes causes the classifier’s output to exceed the maximum allowable size for a given gate.
+            To address invalid predictions, we proposed loss modification.
+            The binning method groups multiple possible gate sizes into a smaller number of bins, reducing the prediction range.
+            Although this approach simplifies model training by decreasing the number of output classes, it ignores subtle differences among sizes within each bin, hindering size optimization and potentially degrading final model accuracy.
+            In contrast, our approach directly penalizes invalid size predictions within the loss function, preserving detailed distinctions among individual cell sizes.
+            Since timing-driven sizing optimization may inadvertently increase leakage power, we explicitly incorporate a leakage power term into our loss function to guide the model toward balanced optimization of both timing and leakage.
+            The proposed loss function is defined as follows:
+
+            <img src="./Image/Function_3.png" alt="Function_3" class="img-fluid w-50 d-block mx-auto">
+
+            By penalizing invalid size selections, the proposed loss function strongly discourages infeasible predictions during training.
+            Additionally, by incorporating leakage power directly into the loss, the model naturally favors gate sizes with lower leakage when they provide similar accuracy.
+          </p>
         </section>
 
         <!-- ────────── Experimental Results ────────── -->
         <section id="experiment_result">
           <h1>Experimental Results</h1>
           <hr class="section-divider">
-          <p>⋯</p>
+          <p>
+            <ul class="dash-list">
+              <li>Explanation of metric (Model Performance, PPA, Runtime)</li>
+              <li>Discussion about how the model approaches this performance</li>
+            </ul>
+          </p>
         </section>
 
         <section id="experiment_result_1">
@@ -285,7 +349,16 @@
         <section id="conclusion">
           <h1>Conclusion</h1>
           <hr class="section-divider">
-          <p>⋯</p>
+          <p>
+            In this work, we formulated gate sizing as a node classification problem and proposed DPH-Sizer, a novel framework combining a heterogeneous graph, Graph Attention Networks (GAT), and a transformer network.
+            
+            <ul class="dash-list">
+              <li>Limitations of this work</li>
+            </ul>
+          
+            Therefore, the future direction of model enhancement is the quality of sizing solutions. 
+            We directly modified the loss function, ultimately resulting in improved PPA metrics across all benchmarks.
+          </p>
         </section>
 
         <section id="conclusion_1">
