@@ -295,9 +295,11 @@
                   \frac{\exp\!\bigl(\operatorname{LReLU}(a^{\top}[\omega^{k}h_{i}\Vert\omega^{k}h_{j}]))}
                        {\displaystyle\sum_{k\in\mathcal{N}_{i}\cup\{i\}}
                         \exp\!\bigl(\operatorname{LReLU}(a^{\top}[\omega^{k}h_{i}\Vert\omega^{k}h_{k}]))}
-                }<a class="cite" href="#ref-2" id="c-2"></a>
+                }
               \]
             </div>
+
+            <a class="cite" href="#ref-2" id="c-2"></a>
           </p>
           
         </section>
@@ -409,8 +411,6 @@
             Therefore, GAT, which assigns adaptive weights to neighbor nodes, is more suitable for gate sizing than GCN, which aggregates neighbors using fixed weights.
             The embedding update equation for the GAT is defined as follows:
           </p>
-          
-          <img src="./Image/Function_2.png" alt="Function_2" class="img-fluid w-40 d-block mx-auto my-5">
 
           <p>
             <div class="eq-big">
@@ -465,6 +465,16 @@
           
           <img src="./Image/Function_3.png" alt="Function_3" class="img-fluid w-20 d-block mx-auto my-5">
 
+          <p>
+            <div class="eq-big">
+              \[
+              {\Large
+              \mathbf{X}' \;=\; \mathbf{X} \;+\; \mathbf{P}\!\bigl[\,:\,;\,L\,;\,:\,\bigr]
+              }
+              \]
+            </div>
+          </p>
+            
           <p>
             Following two successive HeteroGAT layers, cell and pin embeddings individually reside in R^(𝐵×𝑁𝑐 ×𝐹𝑜) and R^(𝐵×𝑁𝑝 ×𝐹𝑜), respectively.
             We concatenate both embeddings to form the input to the positional encoder, fully leveraging the extracted node representations.
