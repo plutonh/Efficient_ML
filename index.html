@@ -12,66 +12,40 @@
     body { padding-top:4rem; font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; counter-reset:cite-counter;}
     main { max-width:1600px; margin:auto; }
 
-    /* 메인 기사 블록(900 px)을 뷰포트 정중앙에 */
+    /* ────────── 메인 기사(900 px)를 화면 중앙에 ────────── */
     .content-wrap{
-      width:900px;                 /* 기사 폭 */
-      margin:0 auto;               /* 가운데 정렬 */
-      position:relative;           /* TOC의 기준 좌표 */
+      /* 기사 박스를 정중앙에! */
+      width:900px;
+      margin:0 auto;
+      position:relative;        /* #toc 절대좌표 기준 */
     }
     
     /* ────────── 본문(기사) ────────── */
     .content-wrap article{
-      width:100%;             /* = 900px */
+      width:100%;               /* 즉 900 px */
       box-sizing:border-box;
-      padding-left:1.25rem;   /* 세로선과 약간의 여백(조절 가능) */
+      padding-left:1.25rem;     /* 세로선과 본문 간격 */
       text-align:justify;
       text-justify:inter-word;
     }
     
     /* ────────── TOC 패널 ────────── */
     #toc{
-      position:absolute;                 /* article 기준으로 고정 */
-      right:calc(100% + 2rem);           /* ← article 왼쪽으로 2rem 띄우기 */
+      /* 데스크톱: 기사 왼쪽에 고정 */
+      position:absolute;
+      right:calc(100% + 2rem);  /* 기사 왼쪽으로 2 rem 간격 */
       top:0;
       width:260px;
-      border-right:2px solid #e5e5e5;    /* 세로선 */
+    
+      /* 시각적 스타일 */
+      border-right:2px solid #e5e5e5;
       padding-left:2rem;
       padding-right:0.5rem;
-      max-height:calc(100vh - 100px);    /* 필요 시 스크롤 영역 */
+      margin-top:1.5rem;
+      max-height:calc(100vh - 100px);
       overflow-y:auto;
     }
     
-    /* ────────── 모바일 이하 ────────── */
-    @media (max-width:991.98px){
-      #toc{
-        position:static;      /* 흐름대로 내려오도록 */
-        right:auto;
-        border-right:none;
-        padding-left:1rem;
-      }
-      .content-wrap{
-        width:100%;           /* 기사 폭 유동 */
-        padding:0 5%;         /* 좌우 여백(선택) */
-      }
-    }
-
-    /* ────────── Citation ────────── */
-    .cite{
-      counter-increment:cite-counter;     
-      text-decoration:none;               
-      color:#0d6efd;                       
-      cursor:pointer;
-      position:relative;
-      top:-0.3em;                         
-      font-size:0.8em;
-    }
-
-    .cite::after{
-      content:"[" counter(cite-counter) "]"; 
-    }
-
-    /* ────────── TOC ────────── */
-    #toc   { position:sticky; top:90px; max-height:calc(100vh - 100px); overflow-y:auto; margin-top:1.5rem; padding-right:0.5rem; padding-left:2rem; border-right:2px solid #e5e5e5;}
     #toc h2{ font-size:1.5rem; font-weight:700; margin-bottom:1rem; }
     #toc ul{ list-style:none; margin:0; padding:0; }
     #toc li{ margin-bottom:0.25rem; }
@@ -79,12 +53,38 @@
     #toc li>a:hover{ text-decoration:underline; }
     #toc ul ul{ margin-left:1rem; border-left:2px solid #e5e5e5; padding-left:0.75rem; }
     #toc a.toc-title{ font-size:1.4rem; font-weight:800; display:block; text-align:center; }
-    #toc li > a{       color:#000; }
+    #toc li > a{ color:#000; }
     #toc li > a:hover{ color:#000; text-decoration:underline; }
-
+    
+    /* ────────── 모바일(폭 992 px 이하) ────────── */
     @media (max-width:991.98px){
-      #toc{ position:static; padding-left:1rem; border-right:none;}
+      #toc{
+        position:static;        /* 흐름에 따라 위로 */
+        right:auto;
+        border-right:none;
+        padding-left:1rem;
+        margin-top:0;
+      }
+      .content-wrap{
+        width:100%;             /* 기사 폭 유동 */
+        padding:0 5%;           /* 좌·우 여백 */
+      }
     }
+    
+    /* ────────── Citation ────────── */
+    .cite{
+      counter-increment:cite-counter;
+      text-decoration:none;
+      color:#0d6efd;
+      cursor:pointer;
+      position:relative;
+      top:-0.3em;
+      font-size:0.8em;
+    }
+    .cite::after{
+      content:"[" counter(cite-counter) "]";
+    }
+
 
     /* ────────── Main ────────── */
     article h1, article h2, article h3{ font-weight:800; margin-top:3rem; margin-bottom:1rem; }
