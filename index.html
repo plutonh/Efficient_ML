@@ -14,6 +14,45 @@
 
     /* ────────── Two-column grid (TOC + gap + article) ────────── */
     .content-wrap{
+      display:grid;
+    
+      /* 260px(TOC) + 2rem(gap) + ≤900px(article)  */
+      grid-template-columns: 260px 2rem minmax(0, 900px);
+    
+      justify-content:center;        /* 트랙 영역을 뷰포트 중앙에 */
+    
+      width:100%;                    /* 화면 크기에 맞춰 가변 */
+      max-width:calc(260px + 2rem + 900px); /* 1192px보다 커지지 않게 */
+      margin:0 auto;                 /* 남는 좌·우 여백을 균등 분배 */
+    }
+    
+    /* ────────── 본문 상자 ────────── */
+    .content-wrap article{
+      /* grid 마지막 트랙과 동일 → 0~900px 사이에서 유연 */
+      width:100%;
+      max-width:900px;
+    
+      padding:0;                     /* 필요하면 1~2rem */
+      box-sizing:border-box;
+    
+      text-align:justify;
+      text-justify:inter-word;
+    }
+    
+    /* ────────── 모바일(≈ ≤992px)에서는 한 열로 쌓기 ────────── */
+    @media (max-width:991.98px){
+      .content-wrap{ grid-template-columns:1fr; }
+      #toc{
+        position:static;
+        border-right:none;
+        padding:0 1rem;
+      }
+      .content-wrap article{ max-width:100%; }
+    }
+
+
+/*     /* ────────── Two-column grid (TOC + gap + article) ────────── */
+    .content-wrap{
       /* 1)   260px(TOC) + 32px(gap) + 900px(본문) = 1192px */
       grid-template-columns: 260px 2rem 900px;
     
@@ -83,7 +122,7 @@
       line-height:1.6;
       text-align:justify;      /* ← 양쪽 정렬 */
       text-justify:inter-word;
-    }
+    } */
 
     /* ────────── Hero ────────── */
     .hero-section{
