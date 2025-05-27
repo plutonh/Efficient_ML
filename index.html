@@ -12,23 +12,25 @@
     body { padding-top:4rem; font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; counter-reset:cite-counter;}
     main { max-width:1600px; margin:auto; }
 
-    /* Two-column grid (sidebar + content) */
+    /* ────────── Two-column grid (sidebar + content) ────────── */
     .content-wrap{
+      /* ① 3열 그리드 : 260 + 2rem + 본문(≤900)  */
       display:grid;
-      grid-template-columns:260px minmax(auto, 900px); /* 2열: TOC + 본문 */
-      gap:2rem;
+      grid-template-columns: 260px 2rem minmax(auto, 900px);
     
-      /* NEW ▶ 그리드 전체를 수평 가운데 정렬 */
-      justify-content:center;
+      /* ② 그리드 블록 자체를 viewport 가운데 배치 */
+      margin:0 auto;
+    
+      /* 세로 간격은 gap 대신 행마다 margin-top 으로 이미 주고 있으므로 필요 없다면 제거 */
     }
 
     /* 본문 폭 • 여백 고정 */
     .content-wrap article{
-      max-width:900px;    /* 글 상자 최대 폭 (원래와 같은 크기로 keep) */
-      margin-left:0;      /* TOC 열 + gap 바로 붙도록  ❰ auto 제거 ❱ */
-      margin-right:0;     /* 필요하면 0, 너무 붙으면 1rem 정도 */
-      padding:0 2rem;     /* 글 안쪽 좌·우 여백만 일정하게 */
+      margin:0;                 /* auto margin 제거 */
+      padding:0 0;              /* 좌우 0 (필요하면 1~2rem) */
       box-sizing:border-box;
+      text-align:justify;
+      text-justify:inter-word;
     }
     
     @media (max-width: 991.98px){
