@@ -14,10 +14,15 @@
 
     /* Two-column grid (sidebar + content) */
     .content-wrap{ display:grid; grid-template-columns:260px 1fr; gap:2rem; }
+    
+    /* 본문 폭 고정 & 가운데 배치 */
     .content-wrap article{
-      padding-right:16rem;    
-      box-sizing:border-box;  
+      max-width:900px;
+      margin:0 auto;
+      padding:0 2rem;
+      box-sizing:border-box;
     }
+    
     @media (max-width: 991.98px){
       .content-wrap{ grid-template-columns:1fr; }
       #toc{ position:static; }
@@ -57,6 +62,17 @@
     /* ────────── Main ────────── */
     article h1, article h2, article h3{ font-weight:800; margin-top:3rem; margin-bottom:1rem; }
     article p{ line-height:1.6; }
+
+    /* ────────── Main ────────── */
+    article h1, article h2, article h3{
+      font-weight:800; margin-top:3rem; margin-bottom:1rem;
+    }
+    
+    article p{
+      line-height:1.6;
+      text-align:justify;      /* ← 양쪽 정렬 */
+      text-justify:inter-word;
+    }
 
     /* ────────── Hero ────────── */
     .hero-section{
