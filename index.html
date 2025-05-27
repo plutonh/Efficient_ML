@@ -12,28 +12,31 @@
     body { padding-top:4rem; font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; counter-reset:cite-counter;}
     main { max-width:1600px; margin:auto; }
 
-    /* ────────── Two-column grid (TOC + gap + article) ────────── */
+    /* ────────── Two-column(TOC+Article) 레이아웃 ────────── */
     .content-wrap{
-      /* 1)   260px(TOC) + 32px(gap) + 900px(본문) = 1192px */
-      grid-template-columns: 260px 2rem 900px;
-    
+      /*  1fr(좌측 여백) + 260px(TOC) + 2rem(갭) + 900px(본문) + 1fr(우측 여백)  */
       display:grid;
-      justify-content:center;   /* 그리드를 뷰포트 중앙에 */
-    
-      width: 1192px;            /* 전체 폭을 고정 → shrink 방지 */
-      margin: 0 auto;           /* 좌·우 여백 균등 */
+      grid-template-columns: 1fr 260px 2rem 900px 1fr;
+      column-gap: 0;               /* 열 간격은 이미 2rem 열로 확보 */
+      justify-content:center;      /* 뷰포트 가운데 정렬 */
+      width:100%;                  /* 폭을 고정값 1192px → 가변 폭으로 */
+      max-width:1192px;            /* 폭 상한선만 두기 */
+      margin:0 auto;               /* 좌·우 여백 균등 */
     }
+        
+    /* TOC와 본문 열 위치를 명시적으로 지정 */
+    #toc           { grid-column:2; }
+    .content-wrap article{ grid-column:4; }
     
-    /* 본문 상자 */
+    /* ────────── 본문 상자 ────────── */
     .content-wrap article{
-      width:900px;              /* grid third column과 동일 */
-      padding:0 0;              /* 필요하면 1~2rem 내부 여백만 */
+      width:100%;                  /* 이미 열 너비가 900px 이므로 100% 사용 */
+      padding-left:1.25rem;        /* ← 세로선과의 여백(필요 시 값 조절) */
       box-sizing:border-box;
-    
       text-align:justify;
       text-justify:inter-word;
     }
-    
+        
     @media (max-width: 991.98px){
       .content-wrap{ grid-template-columns:1fr; }
       #toc{ position:static; }
