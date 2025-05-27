@@ -94,7 +94,7 @@
     .w-80{ width:80% !important; }
     .w-90{ width:90% !important; }
 
-    .eq-big{ font-size:0.9rem; }
+    .eq-big{ font-size:0.8rem; }
     .eq-block{
       text-align:center;
       margin:1.5rem 0;
@@ -181,23 +181,19 @@
             <ul>
               <li><a href="#background_1">Gate Sizing Problems</a></li>
               <li><a href="#background_2">Graph Representation Method</a></li>
-              <li><a href="#background_3">Machine learning framework with GNN-based embedding</a></li>
+              <li><a href="#background_3">Machine Learning Framework with GNN-based Embedding</a></li>
             </ul>
           </li>
           
           <li><a href="#methods">Methods</a>
             <ul>
-              <li><a href="#methods_1">Graph Representation and feature embedding</a></li>
+              <li><a href="#methods_1">Graph Representation and Feature Embedding</a></li>
               <li><a href="#methods_2">Model Architecture (HeteroGAT and Transformer)</a></li>
               <li><a href="#methods_3">Loss Function</a></li>
             </ul>
           </li>
           
           <li><a href="#experiment_result">Experimental Results</a>
-            <ul>
-              <li><a href="#experiment_result_1">Model Performance</a></li>
-            </ul>
-          </li>
         
           <li><a href="#conclusion">Conclusion</a></li>
         
@@ -214,9 +210,9 @@
           <h1>Background</h1>
           <hr class="section-divider">
           <p>
-            Chip placement and routing (P&R) is the engineering task of designing the physical layout of a computer chip. 
+            Chip placement and routing (P&R) is the engineering task of designing the physical layout of a computer chip.
             Although P&R could physically produce a layout with an optimization process, it is an NP-hard problem that can optimize the layout considering various metrics for improvement.
-            Particularly in the gate size optimization problem, researchers couldn’t find a feasible algorithmic method, even if they suggested various adequate methods for several decades. 
+            Particularly in the gate size optimization problem, researchers couldn’t find a feasible algorithmic method, even if they suggested various adequate methods for several decades.
             Thus, ML has emerged as a promising direction for discovering more effective optimization strategies in gate sizing.
           </p>
 
@@ -241,26 +237,39 @@
           </p>
           
           <p>
+            Due to the combinatorial nature of gate sizing, it is inherently an NP-hard problem. 
+            To tackle this complexity, a wide array of methods has been proposed. 
+            Traditional methods include geometric programming, greedy heuristics, and dynamic programming approaches.
+            More recently, methods based on Lagrangian relaxation have emerged, demonstrating promising results by decomposing the global optimization problem into more tractable subproblems.
+          </p>
+
+          <p>
+            However, as process technology continues to scale and circuit complexity increases significantly, these classical optimization methods have shown critical limitations.
+            They typically suffer from excessive runtime or struggle to effectively explore the exponentially expanding search space, often yielding suboptimal performance in modern large-scale designs.
+            To overcome these limitations, machine learning-based approaches have gained increasing attention.
+          </p>
+
+          <p>
             As this sizing technique is one of the most powerful steps in achieving the target PPA in the optimization process, it has been extensively studied for a long time.
           </p>
+  
         </section>
 
         <section id="background_2">
+          
           <h3>Graph Representation Method</h3>
           <p>
             Graph representation methods are widely used when the connection information between components is essential, such as circuit design, social networks, and molecular modeling. 
-            Encoding the above data as graphs enables the structure to contain connectivity information so that learning based methods, such as Graph Neural Networks (GNNs), can be effectively leveraged. 
+            Encoding the above data as graphs enables the structure to contain connectivity information, allowing learning-based methods, such as Graph Neural Networks (GNNs), to be effectively leveraged. 
             For example, Google’s graph-based placement methodology
             <a class="cite" href="#ref-1" id="c-1"></a>
             successfully applied GNNs to netlist graphs for chip floorplanning.
-
           </p>
 
           <figure style="text-align:center;">
             <img src="./Image/Method.png""
                  alt="Method"
                  class="figure-img img-fluid w-100 mb-4">
-          
             <figcaption class="figure-caption">
               Figure 1. Proposed Method  
             </figcaption>
@@ -307,7 +316,7 @@
         </section>
         
         <section id="background_3">
-          <h3>Machine learning framework with GNN-based embedding</h4>
+          <h3>Machine Learning Framework with GNN-based Embedding</h4>
           <p>
             We formulate a machine learning framework that leverages GNN-based embeddings as input to predict performance-related metrics as output. 
             Several prior works have explored ML-based gate sizing, such as NVIDIA’s transformer-based approach
@@ -320,7 +329,7 @@
 
           <p>
             To address the challenges of the above ML-based model, we propose a transformer-based framework using GNN-derived embeddings.
-            Our method efficiently compensates locality agnosticism, which is a well-known transformer’s shortage, by utilizing the GNN's ability to encode local structural information through message passing.
+            Our method efficiently compensates for locality agnosticism, a well-known shortcoming of transformers, by leveraging the GNN's ability to encode local structural information through message passing.
           </p>
         </section>
 
@@ -330,13 +339,13 @@
           <hr class="section-divider">
           <p>
             In this section, we introduce our gate sizing framework, which leverages a heterogeneous graph attention network combined with transformer encoder layers.
-            Our novel gate sizing method consists of 2 parts: graph representation with GAT, and transformer structure with a proper loss function for gate sizing.
-            Also, we represent an efficient representation method for the netlist with our modified heterogeneous graph structure. 
+            Our novel gate sizing method comprises two parts: a graph representation using GAT and a transformer structure with a suitable loss function for gate sizing.
+            Additionally, we propose an efficient representation method for the netlist using our modified heterogeneous graph structure. 
           </p>
         </section>
 
         <section id="methods_1">
-          <h3>Graph Representation and feature embedding</h4>
+          <h3>Graph Representation and Feature Embedding</h4>
           <p>
             We first partition the circuit into smaller subcircuits to simplify the circuit for efficient modeling.
             Each subcircuit is defined by designating input ports or registers as starting points and output ports or registers as endpoints. 
@@ -357,7 +366,7 @@
           <p>
             As shown in the figure, subcircuits were extracted by designating input ports or registers as the starting points and output ports or registers as the endpoints. 
             In addition, when we extracted subcircuits, each subgraph was defined as the combination of all paths that share the same start and endpoints. 
-            These methods allow for better sizing by including connectivity information between cells that traditional sequence modeling does not have.
+            These methods enable better sizing by incorporating connectivity information between cells, which traditional sequence modeling lacks.
           </p>
 
           <p>
@@ -374,7 +383,6 @@
             <img src="./Image/Table_1.png""
                  alt="Table_1"
                  class="img-fluid w-50 d-block mx-auto mb-4">
-          
             <figcaption class="figure-caption">
               Table 1. Parameters
             </figcaption>
@@ -411,7 +419,7 @@
             Unlike prior approaches that treat pins and cells as a single entity, we explicitly represent them as separate nodes in a heterogeneous graph for gate sizing. 
             This separation provides two key advantages.
             First, it effectively captures interactions between driver and receiver pins connected through nets; for instance, upsizing a cell increases the load on its driver cell’s output pin, impacting neighboring cells.
-            Second, it allows the model to explicitly learn the relationship between cells and pins, such as variations in input pin capacitance and output drive strength due to cell resizing.
+            Second, it enables the model to explicitly learn the relationship between cells and pins, such as variations in input pin capacitance and output drive strength resulting from cell resizing.
             Moreover, as previously noted, GAT helps mitigate the over-smoothing problem.
             Another motivation for adopting GAT is that, in gate sizing, not all input cells are equally influential.
             Typically, the driver cell with the worst delay has the most significant impact on sizing decisions.
@@ -453,7 +461,11 @@
           </p>
 
           <p>
-            Where 𝑒_𝑖𝑗 denotes the attention score between node 𝑖 and its neighbor node 𝑗, computed using input embeddings˜_ℎ_𝑖 and˜_ℎ_𝑗, a learnable attention parameter vector 𝑎, and the sigmoid activation function 𝜎, the normalized attention coefficient 𝛼_𝑖𝑗 is obtained by applying the softmax function to these attention scores, measuring the relative importance of node 𝑗 in updating node 𝑖’s embedding. The updated embedding ℎ′𝑖 for node 𝑖is calculated by concatenating the outputs from multiple attention heads, where each head 𝑘 employs a distinct learnable weight matrix 𝑊𝑘 and computes its attention coefficient 𝛼𝑘_𝑖𝑗. Here, 𝐾 represents the total number of attention heads, and N𝑖 denotes the set of neighbor nodes for node 𝑖. 
+            Where 𝑒_𝑖𝑗 denotes the attention score between node 𝑖 and its neighbor node 𝑗, computed using input embeddings˜_ℎ_𝑖 and˜_ℎ_𝑗, a learnable attention parameter vector 𝑎, 
+            and the sigmoid activation function 𝜎, the normalized attention coefficient 𝛼_𝑖𝑗 is obtained by applying the softmax function to these attention scores, 
+            measuring the relative importance of node 𝑗 in updating node 𝑖’s embedding. 
+            The updated embedding ℎ′𝑖 for node 𝑖is calculated by concatenating the outputs from multiple attention heads, where each head 𝑘 employs a distinct learnable weight matrix 𝑊𝑘 and computes its attention coefficient 𝛼𝑘_𝑖𝑗. 
+            Here, 𝐾 represents the total number of attention heads, and N𝑖 denotes the set of neighbor nodes for node 𝑖. 
             With bidirectional edges, cell nodes connect via cell-to-pin and pin-to-cell edges; final cell embeddings are obtained by attention-weighted summation of embeddings from each edge type. 
             However, pin nodes are connected through both cell-to-pin, pin-to-pin, and pin-to-cell edges. 
             Therefore, pin node embeddings are obtained by an attention-weighted sum of embeddings from three edge types.
@@ -541,7 +553,7 @@
           <h1>Conclusion</h1>
           <hr class="section-divider">
           <p>
-            In this work, we formulated gate sizing as a node classification problem and proposed DPH-Sizer, a novel framework combining a heterogeneous graph, Graph Attention Networks (GAT), and a transformer network.
+            In this work, we formulate gate sizing as a node classification problem and propose DPH-Sizer, a novel framework that combines a heterogeneous graph, Graph Attention Networks (GAT), and a transformer network.
             
             <ul class="dash-list">
               <li>Limitations of this work</li>
