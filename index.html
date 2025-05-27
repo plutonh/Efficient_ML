@@ -12,52 +12,48 @@
     body { padding-top:4rem; font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; counter-reset:cite-counter;}
     main { max-width:1600px; margin:auto; }
 
-    /* ────────── 레이아웃 핵심 ────────── */
+    /* ────────── 레이아웃 ────────── */
     .content-wrap{
-      /* ① 기사를 뷰포트 정중앙에 놓기 */
-      max-width:900px;          /* 기사 폭과 동일 */
-      margin:0 auto;            /* ← 가운데 정렬 */
-      position:relative;        /* TOC를 절대 위치로 붙일 기준 */
+      /* 기사(900px)만 뷰포트 정중앙 */
+      width:900px;
+      margin:0 auto;          /* 가운데 정렬 */
+      position:relative;      /* TOC의 기준 좌표 */
     }
     
     /* ────────── 본문(기사) ────────── */
     .content-wrap article{
-      width:100%;               /* = 900px */
+      width:100%;             /* = 900px */
       box-sizing:border-box;
-      padding-left:1.25rem;     /* 세로선과 거리 확보(값은 필요에 따라 조절) */
+      padding-left:1.25rem;   /* 세로선과 약간의 여백(조절 가능) */
       text-align:justify;
       text-justify:inter-word;
     }
     
     /* ────────── TOC 패널 ────────── */
     #toc{
-      position:absolute;        /* 기사 왼쪽에 ‘붙이기’ */
-      /* 260px(TOC 폭) + 2rem(열 간격) 만큼 왼쪽으로 이동 */
-      left:calc(-260px - 2rem); 
-      top:0;                    /* 기사 위쪽과 수평 정렬 */
+      position:absolute;                 /* article 기준으로 고정 */
+      right:calc(100% + 2rem);           /* ← article 왼쪽으로 2rem 띄우기 */
+      top:0;
       width:260px;
-      border-right:2px solid #e5e5e5;
-      padding-right:0.5rem;
+      border-right:2px solid #e5e5e5;    /* 세로선 */
       padding-left:2rem;
-      max-height:none;          /* 필요 시 원하는 높이로 조절 */
+      padding-right:0.5rem;
+      max-height:calc(100vh - 100px);    /* 필요 시 스크롤 영역 */
+      overflow-y:auto;
     }
     
-    /* ────────── 반응형(모바일) ────────── */
+    /* ────────── 모바일 이하 ────────── */
     @media (max-width:991.98px){
       #toc{
-        position:static;        /* 모바일에서는 자연스럽게 흐르도록 */
-        left:auto;
+        position:static;      /* 흐름대로 내려오도록 */
+        right:auto;
         border-right:none;
         padding-left:1rem;
       }
       .content-wrap{
-        max-width:100%;         /* 화면 폭에 맞춰 기사 폭도 유동적으로 */
-        padding:0 5%;           /* 좌우 여백 조금 주기(선택) */
+        width:100%;           /* 기사 폭 유동 */
+        padding:0 5%;         /* 좌우 여백(선택) */
       }
-    }    
-    @media (max-width: 991.98px){
-      .content-wrap{ grid-template-columns:1fr; }
-      #toc{ position:static; }
     }
 
     /* ────────── Citation ────────── */
