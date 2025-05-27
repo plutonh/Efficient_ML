@@ -211,7 +211,7 @@
           <hr class="section-divider">
           <p>
             Chip placement and routing (P&R) is the engineering task of designing the physical layout of a computer chip.
-            Although P&R could physically produce a layout with an optimization process, it is an NP-hard problem that can optimize the layout considering various metrics for improvement.
+            Although P&R can physically produce a layout through an optimization process, it is an NP-hard problem that requires optimization to consider various metrics for improvement.
             Particularly in the gate size optimization problem, researchers couldn’t find a feasible algorithmic method, even if they suggested various adequate methods for several decades.
             Thus, ML has emerged as a promising direction for discovering more effective optimization strategies in gate sizing.
           </p>
@@ -225,7 +225,7 @@
           <h3>Gate Sizing Problems</h3>
           <p>
             Gate sizing has long been explored as a technique for optimizing the circuit's performance, power, and area (PPA) by assigning the appropriate gate size to each cell from the available library candidates.
-            For standard cells with identical functionality, increasing the cell size typically enhances drive strength, reducing intrinsic delay but leading to higher leakage power and larger area. 
+            For standard cells with identical functionality, increasing the cell size typically enhances drive strength, reduces intrinsic delay, but leads to higher leakage power and a larger area. 
           </p>
 
           <p>
@@ -238,7 +238,7 @@
           
           <p>
             Due to the combinatorial nature of gate sizing, it is inherently an NP-hard problem. 
-            To tackle this complexity, a wide array of methods has been proposed. 
+            To address this complexity, a diverse range of methods has been proposed. 
             Traditional methods include geometric programming, greedy heuristics, and dynamic programming approaches.
             More recently, methods based on Lagrangian relaxation have emerged, demonstrating promising results by decomposing the global optimization problem into more tractable subproblems.
           </p>
@@ -339,7 +339,7 @@
           <hr class="section-divider">
           <p>
             In this section, we introduce our gate sizing framework, which leverages a heterogeneous graph attention network combined with transformer encoder layers.
-            Our novel gate sizing method comprises two parts: a graph representation using GAT and a transformer structure with a suitable loss function for gate sizing.
+            Our novel gate sizing method consists of 2 parts, graph representation with GAT, and transformer structure with proper loss function for gate sizing.
             Additionally, we propose an efficient representation method for the netlist using our modified heterogeneous graph structure. 
           </p>
         </section>
@@ -359,7 +359,7 @@
                  class="figure-img img-fluid w-100 mb-4"">
           
             <figcaption class="figure-caption">
-              Figure 2. Graph Representation and Feature Embedding
+              Figure 2. Netlist to Heterogeneous Graph Representation.
             </figcaption>
           </figure>
 
@@ -384,7 +384,7 @@
                  alt="Table_1"
                  class="img-fluid w-50 d-block mx-auto mb-4">
             <figcaption class="figure-caption">
-              Table 1. Parameters
+              Table 1. Pin and Cell Node Features
             </figcaption>
           </figure>
 
@@ -409,7 +409,7 @@
                  class="figure-img img-fluid w-100 mb-4">
           
             <figcaption class="figure-caption">
-              Figure 3. Model Architecture
+              Figure 3. Overview of our gate sizing optimization framework
             </figcaption>
           </figure>
 
