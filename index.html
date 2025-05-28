@@ -520,7 +520,7 @@
           <p>
             Where \(e_{ij}\) denotes the attention score between node \(i\) and its neighbor node \(j\), computed using input embeddings \(\tilde{\mathbf{h}}_{i}\) and \(\tilde{\mathbf{h}}_{j}\) a learnable attention parameter vector \(\alpha\), 
             and the sigmoid activation function \(\sigma\), the normalized attention coefficient \(\alpha_{ij}\) is obtained by applying the softmax function to these attention scores, measuring the relative importance of node \(j\) in updating node \(i\)’s embedding. 
-            The updated embedding \(\tilde{\mathbf{h}}_{i}\) for node \(i\) is calculated by concatenating the outputs from multiple attention heads, where each head 𝑘 employs a distinct learnable weight matrix 𝑊𝑘 and computes its attention coefficient \(\alpha^{k}_{ij}\). 
+            The updated embedding \(\tilde{\mathbf{h}}_{i}\) for node \(i\) is calculated by concatenating the outputs from multiple attention heads, where each head 𝑘 employs a distinct learnable weight matrix \(\mathbf{W}_{k}\) and computes its attention coefficient \(\alpha^{k}_{ij}\). 
             Here, \(K\) represents the total number of attention heads, and \(\mathcal{N}_{i}\) denotes the set of neighbor nodes for node \(i\). 
             With bidirectional edges, cell nodes connect via cell-to-pin and pin-to-cell edges; final cell embeddings are obtained by attention-weighted summation of embeddings from each edge type. 
             However, pin nodes are connected through both cell-to-pin, pin-to-pin, and pin-to-cell edges. 
@@ -549,7 +549,7 @@
           </p>
             
           <p>
-            Following two successive HeteroGAT layers, cell and pin embeddings individually reside in R^(𝐵×𝑁𝑐 ×𝐹𝑜) and R^(𝐵×𝑁𝑝 ×𝐹𝑜), respectively.
+            Following two successive HeteroGAT layers, cell and pin embeddings individually reside in \( \mathbb{R}^{B \times N_c \times F_o} \) and \( \mathbb{R}^{B \times N_p \times F_o} \), respectively.
             We concatenate both embeddings to form the input to the positional encoder, fully leveraging the extracted node representations.
             Given an input embedding sequence 𝑋 ∈R^(𝐵×𝐿×𝑑_model) and a learnable positional encoding matrix 𝑃 ∈R^(1×𝐿_max × 𝑑_model), the output embedding 𝑋′with positional encoding is defined by adding the positional encoding to the input embeddings.
             Where 𝐵 denotes the batch size, 𝐿= 𝑁𝑐+𝑁𝑝 is the total number of nodes, and 𝑑model represents the embedding dimension.
