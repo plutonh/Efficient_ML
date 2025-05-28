@@ -499,7 +499,7 @@
 
           <p>
             Where 𝑒_𝑖𝑗 denotes the attention score between node 𝑖 and its neighbor node 𝑗, computed using input embeddings˜_ℎ_𝑖 and˜_ℎ_𝑗, a learnable attention parameter vector 𝑎, 
-            and the sigmoid activation function 𝜎, the normalized attention coefficient 𝛼_𝑖𝑗 is obtained by applying the softmax function to these attention scores, 
+            and the sigmoid activation function 𝜎, the normalized attention coefficient \[𝛼_𝑖𝑗\] is obtained by applying the softmax function to these attention scores, 
             measuring the relative importance of node 𝑗 in updating node 𝑖’s embedding. 
             The updated embedding ℎ′𝑖 for node 𝑖is calculated by concatenating the outputs from multiple attention heads, where each head 𝑘 employs a distinct learnable weight matrix 𝑊𝑘 and computes its attention coefficient 𝛼𝑘_𝑖𝑗. 
             Here, 𝐾 represents the total number of attention heads, and N𝑖 denotes the set of neighbor nodes for node 𝑖. 
