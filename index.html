@@ -386,7 +386,7 @@
           <hr class="section-divider">
           <p>
             In this section, we introduce our gate sizing framework, which leverages a heterogeneous graph attention network combined with transformer encoder layers.
-            Our novel gate sizing method consists of 2 parts, graph representation with GAT, and transformer structure with proper loss function for gate sizing.
+            Our novel gate sizing method consists of 2 parts: graph representation with GAT, and transformer structure with a proper loss function for gate sizing.
             Additionally, we propose an efficient representation method for the netlist using our modified heterogeneous graph structure. 
           </p>
         </section>
@@ -476,36 +476,46 @@
 
           <p>
             <div class="eq-block">
-              \[
-              {\Large
-              h'_{i}
-              =\operatorname*{CONCAT}_{1 \le k \le K}
-              \;\sigma\!\Bigl(
-                \sum_{j \in \mathcal{N}_{i}}
-                \alpha^{k}_{ij}\,\mathbf{h}_{j}\mathbf{W}_{k}
-              \Bigr)
-              }
-              \]
-              
-              \[
-              {\Large
-              \alpha_{ij}
-              =\operatorname*{softmax}_{j}(e_{ij})
-              =\frac{\exp(e_{ij})}
-                     {\displaystyle\sum_{k \in \mathcal{N}_{i}}\exp(e_{ik})}
-              }
-              \]
-              
-              \[
-              {\Large
-              e_{ij}
-              =\sigma\!\Bigl(
-                \mathbf{a}^{\top}\bigl[\operatorname{CONCAT}(\tilde{\mathbf{h}}_{i},\tilde{\mathbf{h}}_{j})\bigr]
-              \Bigr)
-              }
-              \]
+              <span class="eq-wrap">
+                \[
+                {\Large
+                h'_{i}
+                =\operatorname*{CONCAT}_{1 \le k \le K}
+                \;\sigma\!\Bigl(
+                  \sum_{j \in \mathcal{N}_{i}}
+                  \alpha^{k}_{ij}\,\mathbf{h}_{j}\mathbf{W}_{k}
+                \Bigr)
+                }
+                \]
+              </span>
+            </div>
+            <div class="eq-block">
+              <span class="eq-wrap">
+                \[
+                {\Large
+                \alpha_{ij}
+                =\operatorname*{softmax}_{j}(e_{ij})
+                =\frac{\exp(e_{ij})}
+                       {\displaystyle\sum_{k \in \mathcal{N}_{i}}\exp(e_{ik})}
+                }
+                \]
+              </span>
+            </div>
+            <div class="eq-block">
+              <span class="eq-wrap">
+                \[
+                {\Large
+                e_{ij}
+                =\sigma\!\Bigl(
+                  \mathbf{a}^{\top}\bigl[\operatorname{CONCAT}(\tilde{\mathbf{h}}_{i},\tilde{\mathbf{h}}_{j})\bigr]
+                \Bigr)
+                }
+                \]
+              </span>
             </div>
           </p>
+
+        </section>
 
           <p>
             Where \(e_{ij}\) denotes the attention score between node \(i\) and its neighbor node \(j\), computed using input embeddings \(\tilde{\mathbf{h}}_{i}\) and \(\tilde{\mathbf{h}}_{j}\) a learnable attention parameter vector \(\alpha\), 
