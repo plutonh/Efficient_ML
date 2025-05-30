@@ -775,13 +775,6 @@
           <section id="experiment_result_3">
             <h3>Runtime Analysis</h3>
 
-            <p>
-               Across the five benchmark designs, DPH-Sizer averages just 2.1 k ms per chip—about 18 × faster than the original Transformer implementation (39.5 k ms).
-              It still stays within roughly 7 × of the lightweight DAG heuristic (300.8 ms).
-              Moreover, it delivers the highest validation accuracy at 95.5 % (versus 75.8 % for DAG and 57.2 % for Trans).
-              Taken together, these results show that combining heterogeneous GAT layers with a Transformer backbone achieves state-of-the-art gate-sizing quality without prohibitive runtime overhead, making the method practical for modern design flows.
-            </p>
-
             <figure style="text-align:center;">
               <figcaption class="figure-caption mt-cap mb-3">
                 Table 4. Runtime comparison of models.
@@ -791,6 +784,12 @@
                    class="img-fluid w-40 d-block mx-auto mt-auto mb-cap">
             </figure>
 
+            <p>
+               Across the five benchmark designs, DPH-Sizer averages just 2.1 k ms per chip—about 18 × faster than the original Transformer implementation (39.5 k ms).
+              It still stays within roughly 7 × of the lightweight DAG heuristic (300.8 ms).
+              Moreover, it delivers the highest validation accuracy at 95.5 % (versus 75.8 % for DAG and 57.2 % for Trans).
+              Taken together, these results show that combining heterogeneous GAT layers with a Transformer backbone achieves state-of-the-art gate-sizing quality without prohibitive runtime overhead, making the method practical for modern design flows.
+            </p>
           </section>
         </section>
 
