@@ -166,12 +166,15 @@
     .mb-cap{
       margin-bottom: 2.0rem;   /* 필요 길이로 조정 */
     
-
+    /* 표·그림 왼쪽 모서리에 맞춰 붙는 캡션(주석) ------------------------- */
     .table-note{
-      color:#000;        /* 검은 글씨 (text-muted 무시)   */
-      font-size:0.85rem; /* small 과 비슷한 크기          */
-      text-align:left;   /* 왼쪽 정렬                     */
-      margin-left:0;     /* 표 왼쪽과 맞추고 싶다면 필요  */
+      display:inline-block;   /* figure의 중앙 기준으로 '박스' 하나 생성 */
+      max-width:100%;         /* 그림·표의 가로폭과 동일하게         */
+      text-align:left;        /* 박스 내부 글씨만 왼쪽 정렬            */
+    
+      font-size:0.85rem;
+      color:#000;
+      margin-top:0.25rem;     /* 표와 캡션 사이 살짝 간격               */
     }
 
   </style>
@@ -756,7 +759,7 @@
               </figcaption>
               <img src="./Image/Table_3.png""
                    alt="Table_3"
-                   class="img-fluid w-50 d-block mx-auto mt-auto mb-auto">
+                   class="img-fluid w-50 d-block mx-auto mt-auto mb-2">
               <div class="table-note mb-cap">
                 <sup>1</sup> HomoGAT <sup>2</sup> HeteroGAT <sup>3</sup> HeteroGAT + Transformer
               </div>
