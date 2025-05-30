@@ -166,15 +166,12 @@
     .mb-cap{
       margin-bottom: 2.0rem;   /* 필요 길이로 조정 */
     
-    /* 표·그림 왼쪽 모서리에 맞춰 붙는 캡션(주석) ------------------------- */
     .table-note{
-      display:inline-block;   /* figure의 중앙 기준으로 '박스' 하나 생성 */
-      max-width:100%;         /* 그림·표의 가로폭과 동일하게         */
-      text-align:left;        /* 박스 내부 글씨만 왼쪽 정렬            */
-    
-      font-size:0.85rem;
+      display:inline-block;   /* figure 중앙 기준으로 ‘박스’ 하나 */
+      max-width:100%;         /* 표·그림 폭 만큼만               */
+      text-align:left;        /* 박스 내부만 왼쪽 정렬            */
+      font-size:0.85rem;      /* 검은 글씨 작은 크기             */
       color:#000;
-      margin-top:0.25rem;     /* 표와 캡션 사이 살짝 간격               */
     }
 
   </style>
@@ -753,16 +750,23 @@
               All models were trained with an untuned cross-entropy loss, focusing solely on expressive power.
             </p>
   
-            <figure style="my-4">
-              <figcaption class="figure-caption text-center mt-cap mb-3">
-                Table 3. Validation accuracy comparison of models. Best results are highlighted in bold.
+            <figure class="my-4 text-center">
+            
+              <!-- 표 설명 : 가운데 정렬 + 위에 여백 -->
+              <figcaption class="figure-caption mb-3">
+                Table&nbsp;3. Validation accuracy comparison of models. Best results are highlighted in bold.
               </figcaption>
-              <img src="./Image/Table_3.png""
-                   alt="Table_3"
-                   class="img-fluid w-50 d-block mx-auto mt-auto mb-2">
-              <figcaption class="table-note mb-cap">
+            
+              <!-- 표 이미지 -->
+              <img src="./Image/Table_3.png"
+                   alt="Table 3"
+                   class="img-fluid w-50 d-block mx-auto mb-2">
+            
+              <!-- 주석 : 표 왼쪽 모서리에 맞춤 -->
+              <figcaption class="table-note">
                 <sup>1</sup> HomoGAT <sup>2</sup> HeteroGAT <sup>3</sup> HeteroGAT + Transformer
               </figcaption>
+            
             </figure>
   
             <p>
