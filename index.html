@@ -633,7 +633,7 @@
             This constraint sometimes causes the classifier’s output to exceed the maximum allowable size for a given gate.
             To address invalid predictions, we proposed loss modification.
             The binning method groups multiple possible gate sizes into a smaller number of bins, reducing the prediction range.
-            Although this approach simplifies model training by decreasing the number of output classes, it ignores subtle differences among sizes within each bin, hindering size optimization and potentially degrading final model accuracy.
+            Although this approach simplifies model training by reducing the number of output classes, it overlooks subtle differences among sizes within each bin, which hinders size optimization and may degrade the final model accuracy.
             In contrast, our approach directly penalizes invalid size predictions within the loss function, preserving detailed distinctions among individual cell sizes.
             Since timing-driven sizing optimization may inadvertently increase leakage power, we explicitly incorporate a leakage power term into our loss function to guide the model toward balanced optimization of both timing and leakage.
             The proposed loss function is defined as follows:
@@ -696,12 +696,54 @@
         <section id="experiment_result">
           <h1>Experimental Results</h1>
           <hr class="section-divider">
+
+          <h3>Experiment Setup</h3>
           <p>
-            <ul class="dash-list">
-              <li>Explanation of metric (Model Performance, PPA, Runtime)</li>
-              <li>Discussion about how the model approaches this performance</li>
-            </ul>
+             The experiments are conducted on a server with an Intel Xeon Gold 6226R CPU and an NVIDIA TITAN RTX GPU.
+            We utilize open-source benchmarks provided by OpenCores
+            <a class="cite" href="#ref-7" id="c-7"></a>
+            to train and evaluate the gate sizing model, as detailed in Table 2.
+            The dataset comprises five training designs.
+            For validation, one design is reserved for testing, while the remaining four are used for training.
+            We used Synopsys Design Compiler
+            <a class="cite" href="#ref-8" id="c-8"></a>
+            for synthesis and Cadence Innovus
+            <a class="cite" href="#ref-9" id="c-9"></a>,for placement with an Intel 22nm PDK.
+            The gate sizing model is implemented using Pytorch and DGL.
           </p>
+
+          <figure style="text-align:center;">
+            <img src="./Image/Table_2.png""
+                 alt="Table_2"
+                 class="img-fluid w-50 d-block mx-auto mb-4">
+            <figcaption class="figure-caption">
+              Table 2. Design statistics for gate sizing.
+            </figcaption>
+          </figure>
+
+          <h3>DPH-Sizer vs. Previous Models</h3>
+          <p>
+            Table 3 summarizes validation-set accuracy on previously unseen layouts, a direct indicator of each model’s representational capacity.
+            We evaluate our own re-implementations of TransSizer (our reproduction achieves an average accuracy of 61.3%, essentially matching the 62% reported by the authors when the D5 benchmark is excluded), DAGSizer, a homogeneous-graph GAT baseline (HomoGAT), a HeteroGAT-only model, and the proposed HeteroGAT + Transformer architecture.
+            For fairness, the parameter counts of “\(Ours^1\)” and “\(Ours^2\)” were kept within 5 % of each other by adjusting hidden-layer widths.
+            All models were trained with an untuned cross-entropy loss, focusing solely on expressive power.
+          </p>
+
+          <figure style="text-align:center;">
+            <img src="./Image/Table_3.png""
+                 alt="Table_3"
+                 class="img-fluid w-50 d-block mx-auto mb-4">
+            <figcaption class="figure-caption">
+              Table 3. Validation accuracy comparison of models. Best results are highlighted in bold.
+            </figcaption>
+          </figure>
+
+          <p>
+            The following are the key observations:
+          </p>
+
+          
+          
         </section>
 
         <!-- ────────── Conclusion ────────── -->
@@ -783,6 +825,30 @@
                 </span>
                 <span class="ref-detail">
                   CK. Cheng et al., <em>ACM Transactions on Design Automation of Electronic Systems</em> vol. 28, no. 4, pp. 52:1-31, 2023.
+                </span>
+              </li>
+
+              <li id="ref-7">
+                <a href="#c-7" class="back">↩︎</a>
+                <span class="ref-title">
+                  Opencores
+                </span>
+                <span class="ref-detail">
+                  <em>https://opencores.org</em>
+                </span>
+              </li>
+
+              <li id="ref-8">
+                <a href="#c-8" class="back">↩︎</a>
+                <span class="ref-title">
+                  Synopsys Design Compiler v18.06 User Guide
+                </span>
+              </li>
+
+              <li id="ref-9">
+                <a href="#c-9" class="back">↩︎</a>
+                <span class="ref-title">
+                  Cadence Innovus Implementation System v21.16 User Guide
                 </span>
               </li>
               
