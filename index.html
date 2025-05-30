@@ -236,8 +236,9 @@
           <li><a href="#methods">Methods</a>
             <ul>
               <li><a href="#methods_1">Why Heterogeneous Graph?</a></li>
-              <li><a href="#methods_2">Model Architecture (HeteroGAT and Transformer)</a></li>
-              <li><a href="#methods_3">Loss Function</a></li>
+              <li><a href="#methods_2">Graph Representation and Feature Embedding</a></li>
+              <li><a href="#methods_3">Model Architecture (HeteroGAT and Transformer)</a></li>
+              <li><a href="#methods_4">Loss Function</a></li>
             </ul>
           </li>
           
@@ -320,7 +321,7 @@
           </p>
 
           <figure style="text-align:center;">
-            <img src="./Image/Method.png""
+            <img src="./Image/1_Method.png""
                  alt="Method"
                  class="figure-img img-fluid w-100 mb-4">
             <figcaption class="figure-caption">
@@ -329,7 +330,7 @@
           </figure>
           
           <p>
-             To construct the graph representation of the gate-level netlist, we utilize GNN-based embedding as the Fig. 1 which explains netlist to graph representation method flow.
+             To construct the graph representation of the gate-level netlist, we utilize GNN-based embedding as shown in Fig. 1, which explains the netlist to graph representation method flow.
             While various architectures such as GCN, GraphSAGE, and GAT could be employed for this purpose, we specifically adopt the GAT structure to address the over-smoothing problem commonly observed in deep neural networks.
           </p>
           
@@ -343,23 +344,22 @@
             <a class="cite" href="#ref-3" id="c-3"></a>,
             which employs sequence modeling to predict gate sizes in an autoregressive manner, and RL-Sizer
             <a class="cite" href="#ref-4" id="c-4"></a>,
-            which is the first to utilize GNNs for extracting states and actions within a Markov Decision Process. 
-            However, these methods face limitations due to their reliance on sequential representations or the constraints of reinforcement learning paradigms.
+            which is the first to utilize GNNs for extracting states and actions within a Markov Decision Process.
+            Another previous work by X. Zhou et al.
+            <a class="cite" href="#ref-5" id="c-5"></a>,
+            integrated a heterogeneous graph-based GNN into a Lagrangian relaxation-based sizing framework, using AI to narrow down the sizing candidates rather than performing direct sizing.
+            Additionally, their approach utilizes a GNN based on neighborhood aggregation, which inherently constrains the model to capture only short-range information.
+            This method thus faces limitations in adequately modeling long-range dependencies. On the other hand, DAG-Sizer
+            <a class="cite" href="#ref-6" id="c-6"></a>
+            represented circuits as homogeneous graphs and directly performed gate sizing through graph convolutional network (GCN) layers.
+            Similarly, the local aggregation mechanism of GCN inherently restricts effective modeling of long-range dependencies.
+            In contrast, TransSizer [citation] formulates gate sizing as sequence modeling using Transformers, which excel at modeling long-range dependencies.
+            However, their locality-agnostic nature [citation] presents a significant drawback, as interactions between adjacent cells play a crucial role in gate sizing decisions.
           </p>
 
           <p>
-             To address the above ML-based model’s challenges, we propose a transformer-based framework using GNN-derived embeddings. Our method efficiently compensates locality agnosticism, which is a well-known transformer’s shortage, by utilizing the GNN's ability to encode local structural information through message passing.
-          </p>
-        </section>
-
-        <section id="background_4">
-          <h3>Previous ML-based Gate Sizer vs. Ours</h4>
-          <p>
-            Our gate sizer is a novel gate sizing framework that effectively integrates the strengths of heterogeneous graphs, Graph Attention Networks (GAT), and Transformers to simultaneously capture short and long-range dependencies.
-          </p>
-
-          <p>
-             To address the above ML-based model’s challenges, we propose a transformer-based framework using GNN-derived embeddings. Our method efficiently compensates locality agnosticism, which is a well-known transformer’s shortage, by utilizing the GNN's ability to encode local structural information through message passing.
+             To address the challenges of the above ML-based model, we propose a transformer-based framework utilizing GNN-derived embeddings.
+            Our method efficiently compensates for locality agnosticism, a well-known shortcoming of transformers, by leveraging the GNN's ability to encode local structural information through message passing.
           </p>
         </section>
 
@@ -369,8 +369,8 @@
           <hr class="section-divider">
           <p>
             In this section, we introduce our gate sizing framework, which leverages a heterogeneous graph attention network combined with transformer encoder layers.
-            Our novel gate sizing method consists of 2 parts, graph representation with GAT, and transformer structure with proper loss function for gate sizing.
-            Also, we represent an efficient representation method for netlist with our modified heterogeneous graph structure.
+            Our novel gate sizing method comprises two parts: a graph representation using GAT and a transformer structure with a suitable loss function for gate sizing.
+            Additionally, we propose an efficient representation method for the netlist using our modified heterogeneous graph structure.
             We begin this section by explaining the motivation behind using a heterogeneous graph, which serves as the foundation for the subsequent components of our framework. 
           </p>
         </section>
@@ -378,37 +378,128 @@
         <section id="methods_1">
           <h3>Why Heterogeneous Graph?</h4>
           <p>
-            In gate sizing, there are two common ways to represent all pins using a homogeneous graph.
-            The first method is to concatenate all pin information into a single embedding for each cell, and then perform inference on the cell.
-            The second method connects pins and cells separately and masks the pins during inference. Below figure reveals two approaches in comparison.
+             In gate sizing, there are two common ways to represent all pins using a homogeneous graph.
+            The first method involves concatenating all pin information into a single embedding for each cell and then performing inference on the cell.
+            The second method connects pins and cells separately and masks the pins during inference.
+            Fig. 2 below illustrates the comparison of the two approaches.
           </p>
 
           <figure style="text-align:center;">
-            <img src="./Image/HeteroGraph.png""
-                 alt="Hetero_Grap"
+            <img src="./Image/2_WhyHetero.png""
+                 alt="Why_Hetero"
                  class="figure-img img-fluid w-70 mb-4"">
           
             <figcaption class="figure-caption">
-              Figure 2. Netlist to Heterogeneous Graph Representation.
+              Figure 2. Why is Heterogeneous Graph Representation Needed?
             </figcaption>
           </figure>
 
           <p>
-            As shown in the figure, subcircuits were extracted by designating input ports or registers as the starting points and output ports or registers as the endpoints. 
-            In addition, when we extracted subcircuits, each subgraph was defined as the combination of all paths that share the same start and endpoints. 
-            These methods enable better sizing by incorporating connectivity information between cells, which traditional sequence modeling lacks.
+             The first homogeneous graph method, where all pins are concatenated into the cell embedding, poses challenges due to the varying number of pins for each cell.
+            To handle this, padding is applied to ensure consistent embedding dimensions across cells.
+            However, as the number of pins per cell increases or decreases, this padding can become inefficient, potentially resulting in excessively large padding dimensions.
+            This can make learning more difficult for the model, especially considering the challenge of determining how to handle the topological order of the pins.
+            From an implementation perspective, this introduces an additional layer of complexity.
           </p>
 
           <p>
-            Based on the extracted circuit information, nodes are assigned two types: pins and cells.
-            Edges are classified into three categories according to their connectivity. 
-            The first edge type is the gate arc edge, which is the connection between a cell and its corresponding pin.
-            During the gate sizing process, subtle changes in the slew and arrival time of each pin can significantly influence size decisions for the corresponding cell.
-            To capture this relationship, a gate arc edge is introduced. The second edge type is the net arc edge, which represents connections between pins of different cells.
-            This edge is introduced because delays associated with net arcs directly impact gate sizing decisions.
-            Finally, cell arc edge refers to pin connections within the same cell.
+            On the other hand, the masking approach, while promising, has limitations in the context of gate sizing.
+            There are previous studies, including DAG-based models, that have highlighted the negative impact of excessive masking on model performance.
+            Masking may obscure important relationships between cells and pins, particularly when dealing with complex circuits, such as those involved in gate sizing.
+          </p>
+
+          <p>
+             When it comes to sequences, homogeneous graphs introduce even greater challenges.
+            Not only do they fail to capture all adjacent cell interactions, but the aforementioned issues with pin embeddings also persist.
+            This results in an incomplete representation, making it difficult to achieve optimal gate sizing.
+          </p>
+
+          <p>
+             Gate sizing is influenced by all neighboring cells, and representing only a subset of pins or focusing solely on the worst-case scenario would not logically capture the true impact on performance.
+            A heterogeneous graph, however, naturally addresses these issues.
+            By using distinct node types for pins and cells, a heterogeneous graph provides a more flexible and intuitive separation of components, allowing for more accurate modeling without the need for complex padding or excessive masking techniques.
+          </p>
+        </section>
+
+        <section id="method_2">
+          <h3>Graph Representation and Feature Embedding</h4>
+          <p>
+              Still, how we represent a netlist as a heterogeneous graph is an important issue for the performance of prediction models.
+            When we represent netlist as the graph, representing every cell and pin in the circuit as a single graph requires substantial data and can lead to GPU memory issues.
+            To alleviate computational complexity and enable efficient modeling, we first partition the circuit into smaller subcircuits.
+            Each subcircuit is defined by selecting input ports or registers as sources and output ports or registers as sinks, encompassing all paths connecting these sources to their corresponding sinks.
+            We then construct a heterogeneous graph that explicitly distinguishes between pins and cells and captures multiple edge types to represent their connectivity.
+            The equation of the graph representation is as follows:
           </p>
           
+          <!-- ────────── Graph Definition Equation ────────── -->
+          <div class="eq-block">
+            <span class="eq-wrap">
+              \[
+                {\Large
+                  \mathcal{G}_{s,t}
+                  \;=\;
+                  \bigl(V_{s,t},\,E_{s,t}\bigr)
+                  \;=\;
+                  \Bigl(
+                    \;
+                    \bigcup_{p \in \mathcal{P}_{s,t}} V_{p},
+                    \;
+                    \bigcup_{p \in \mathcal{P}_{s,t}} E_{p}
+                  \Bigr),
+                }
+              \]
+          
+              \[
+                {\Large
+                  V_{s,t}
+                  \;=\;
+                  V^{\text{cell}}_{s,t}
+                  \;\cup\;
+                  V^{\text{pin}}_{s,t},
+                  \qquad
+                  E_{s,t}
+                  \;=\;
+                  E^{\text{gate}}_{s,t}
+                  \;\cup\;
+                  E^{\text{net}}_{s,t}
+                  \;\cup\;
+                  E^{\text{cell}}_{s,t}
+                }
+              \]
+            </span>
+          </div>
+
+          <p>
+             where \( \mathcal{P}_{s,t} \) denotes the set of all paths originating at source node \( s \) and terminating at sink node \( t \).  
+            \( \mathcal{G}_{s,t} \) is a heterogeneous graph with source node \( s \) and sink node \( t \).  
+            The node set \( V_{s,t} \) is composed of two types of nodes: cell nodes \( V^{\text{cell}}_{s,t} \) and pin nodes \( V^{\text{pin}}_{s,t} \).  
+            Similarly, the edge set \( E_{s,t} \) consists of three types of edges.  
+            The first edge type is the gate-arc edge \( E^{\text{gate}}_{s,t} \), which is the connection between a cell and its corresponding pins.  
+            During the gate sizing process, subtle changes of pins, such as the slew and arrival time, can significantly influence size decisions for the corresponding cell.  
+            In order to capture this relationship, \( E^{\text{gate}}_{s,t} \) is introduced.  
+            The second edge type is the net-arc edge \( E^{\text{net}}_{s,t} \), representing connections between pins belonging to different cells.  
+            These edges correspond to physical net connections, capturing the driver-load relationships and effectively modeling signal propagation across the circuit.  
+            For instance, increasing the size of a load cell increases its input-pin capacitance, potentially causing the driver’s output pin to violate its maximum-capacitance constraint.  
+            Finally, the cell-arc edge \( E^{\text{cell}}_{s,t} \) represents internal connections within a cell.
+          </p>
+
+          <figure style="text-align:center;">
+            <img src="./Image/3_HeteroGraph.png""
+                 alt="Hetero_Graph"
+                 class="figure-img img-fluid w-70 mb-4"">
+          
+            <figcaption class="figure-caption">
+              Figure 3. Netlist to Heterogeneous Graph Representation.
+            </figcaption>
+          </figure>
+
+          <p>
+             Fig. 3 above illustrates how our method modulates subcircuits and handles pin and gate nodes in a netlist-based manner.
+            Three types of edges are represented as independent features and consist of two types of nodes.
+            The netlist information is extracted in units of inter-register paths.
+          </p>
+
           <figure style="text-align:center;">
             <img src="./Image/Table_1.png""
                  alt="Table_1"
@@ -419,38 +510,39 @@
           </figure>
 
           <p>
-            Also, we describe the features embedded in each cell and pin of the heterogeneous graph.
-            Detailed information is provided in the Table. 
+             Also, we describe the features embedded in each cell and pin of the heterogeneous graph.
+            Detailed information is provided in the Table.
             We extracted physical and timing information from the circuits and embedded these features into each pin and cell node.
             The features embedded in the cell nodes are denoted as 𝑓cell, while those in the pin nodes are denoted as 𝑓pin.
           </p>
+
         </section>
 
-        <section id="methods_2">
+        <section id="methods_3">
           <h3>Model Architecture (HeteroGAT and Transformer)</h4>
           <p>
-            Our proposed approach incorporates both topological and geometric circuit information to improve sizing performance.
+             Our proposed approach incorporates both topological and geometric circuit information to improve sizing performance.
             The following figure illustrates an overview of DPH-Sizer.
           </p>
           
           <figure style="text-align:center;">
-            <img src="./Image/Flow.png""
-                 alt="Flow"
+            <img src="./Image/4_Framework.png""
+                 alt="Framework"
                  class="figure-img img-fluid w-100 mb-4">
           
             <figcaption class="figure-caption">
-              Figure 3. Overview of our gate sizing optimization framework
+              Figure 4. Overview of our gate sizing optimization framework
             </figcaption>
           </figure>
 
           </p>
-            <h4>Heterogeneous Graph</h5>
-  
-            Unlike prior approaches that treat pins and cells as a single entity, we explicitly represent them as separate nodes in a heterogeneous graph for gate sizing. 
+          <h4>Heterogeneous Graph</h5>
+          <p>
+             As we mentioned above, we explicitly represent netlist components (gate, pin) as separate nodes in a heterogeneous graph for gate sizing.
             This separation provides two key advantages.
             First, it effectively captures interactions between driver and receiver pins connected through nets; for instance, upsizing a cell increases the load on its driver cell’s output pin, impacting neighboring cells.
-            Second, it enables the model to explicitly learn the relationship between cells and pins, such as variations in input pin capacitance and output drive strength resulting from cell resizing.
-            Moreover, as previously noted, GAT helps mitigate the over-smoothing problem.
+            Second, it allows the model to explicitly learn the relationship between cells and pins, such as variations in input pin capacitance and output drive strength due to cell resizing.
+            Moreover, the GAT structure helps mitigate the over-smoothing problem.
             Another motivation for adopting GAT is that, in gate sizing, not all input cells are equally influential.
             Typically, the driver cell with the worst delay has the most significant impact on sizing decisions.
             Therefore, GAT, which assigns adaptive weights to neighbor nodes, is more suitable for gate sizing than GCN, which aggregates neighbors using fixed weights.
@@ -511,9 +603,10 @@
           </p>
 
           <p>
-            <h4>Transformer</h5>
-            
-            Although the above graph structure effectively captures the topological information of circuits, it primarily employs attention mechanisms focused on the local neighborhood of nodes. 
+          
+          <h4>Transformer</h5>
+          <p>
+             Although the above GNN representation effectively captures the topological information of circuits, it primarily employs attention mechanisms focused on the local neighborhood of nodes.
             Consequently, it captures structural characteristics only within a relatively narrow scope.
             To address this limitation and incorporate global geometric structures and long-range dependencies within circuits, we integrate a transformer into our framework.
             However, transformers inherently lack the ability to capture positional information among elements unless such information is explicitly provided.
@@ -553,8 +646,32 @@
             Since timing-driven sizing optimization may inadvertently increase leakage power, we explicitly incorporate a leakage power term into our loss function to guide the model toward balanced optimization of both timing and leakage.
             The proposed loss function is defined as follows:
           </p>
+
+          <div class="eq-block">
+            <span class="eq-wrap">
+              \[
+                {\Large
+                \mathrm{CE\!Loss}_{\text{new}}
+                \;=\;
+                -\sum_{c=1}^{L}
+                  \bigl(\mathrm{Leakage}_{i,c}
+                        + \alpha \cdot M_{i,c}\bigr)
+                  \,y_{i,c}\,
+                  \log\!\bigl(q_{i,c}\bigr)
+                }
+              \]
           
-          <p>
+              \[
+                M_{i,c} \;=\;
+                \begin{cases}
+                  1, & \text{if gate size } c \text{ is invalid for gate } i,\\[4pt]
+                  0, & \text{otherwise},
+                \end{cases}
+              \]
+            </span>
+          </div>
+          
+<!--           <p>
             <div class="eq-big">
               \[
               {\Large
@@ -567,10 +684,18 @@
               }
               \]
             </div>
+          </p> -->
+
+          <p>
+            where \(L\) is the total number of available gate-size classes,
+            \(y_{i,c}\in\{0,1\}\) is the one-hot label for gate \(i\),
+            \(q_{i,c}\) is the softmax probability predicted by the model,
+            and \(\mathrm{Leakage}_{i,c}\) denotes the leakage power
+            of gate \(i\) when sized to class \(c\)
           </p>
           
           <p>
-            By penalizing invalid size selections, the proposed loss function strongly discourages infeasible predictions during training.
+             By penalizing invalid size selections, the proposed loss function strongly discourages infeasible predictions during training.
             Additionally, by incorporating leakage power directly into the loss, the model naturally favors gate sizes with lower leakage when they provide similar accuracy.
           </p>
         </section>
@@ -638,16 +763,6 @@
                   S. Nath et al., <em>Proc. ICCAD</em> 2022.
                 </span>
               </li>
-
-              <li id="ref-3">
-                <a href="#c-3" class="back">↩︎</a>
-                <span class="ref-title">
-                  TransSizer: A Novel Transformer-Based Fast Gate Sizer
-                </span>
-                <span class="ref-detail">
-                  S. Nath et al., <em>Proc. ICCAD</em> 2022.
-                </span>
-              </li>
               
               <li id="ref-4">
                 <a href="#c-4" class="back">↩︎</a>
@@ -658,6 +773,27 @@
                   YC. Lu et al., <em>Proc. DAC</em> 2021.
                 </span>
               </li>
+
+              <li id="ref-5">
+                <a href="#c-5" class="back">↩︎</a>
+                <span class="ref-title">
+                  Heterogeneous Graph Neural Network-Based Imitation Learning for Gate Sizing Acceleration
+                </span>
+                <span class="ref-detail">
+                  X. Zhou et al., <em>Proc. ICCAD</em> 2022.
+                </span>
+              </li>
+
+              <li id="ref-6">
+                <a href="#c-6" class="back">↩︎</a>
+                <span class="ref-title">
+                  Heterogeneous Graph Neural Network-Based Imitation Learning for Gate Sizing Acceleration
+                </span>
+                <span class="ref-detail">
+                  CK. Cheng et al., <em>ACM Transactions on Design Automation of Electronic Systems</em> vol. 28, no. 4, pp. 52:1-31, 2023.
+                </span>
+              </li>
+              
            </ol>
         </section>
 
