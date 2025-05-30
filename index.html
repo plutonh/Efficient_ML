@@ -227,14 +227,15 @@
             <a href="#background">Background</a>
             <ul>
               <li><a href="#background_1">Gate Sizing Problems</a></li>
-              <li><a href="#background_2">Graph Representation Method</a></li>
+              <li><a href="#background_2">Graph Representation</a></li>
               <li><a href="#background_3">Machine Learning Framework with GNN-based Embedding</a></li>
+              <li><a href="#background_4">Previous ML-based Gate Sizer vs. Ours</a></li>
             </ul>
           </li>
           
           <li><a href="#methods">Methods</a>
             <ul>
-              <li><a href="#methods_1">Graph Representation and Feature Embedding</a></li>
+              <li><a href="#methods_1">Why Heterogeneous Graph?</a></li>
               <li><a href="#methods_2">Model Architecture (HeteroGAT and Transformer)</a></li>
               <li><a href="#methods_3">Loss Function</a></li>
             </ul>
@@ -257,27 +258,26 @@
           <h1>Background</h1>
           <hr class="section-divider">
           <p>
-            Chip placement and routing (P&R) is the engineering task of designing the physical layout of a computer chip.
-            Although P&R can physically produce a layout through an optimization process, it is an NP-hard problem that requires optimization to consider various metrics for improvement.
-            Particularly in the gate size optimization problem, researchers couldn’t find a feasible algorithmic method, even if they suggested various adequate methods for several decades.
+             Chip placement and routing (P&R) is the engineering task of designing the physical layout of a computer chip. 
+            Although P&R could physically produce a layout with an optimization process, it is an NP-hard problem that can optimize the layout considering various metrics for improvement.
+            Particularly in the gate size optimization problem, researchers couldn’t find a feasible algorithmic method, even if they suggested various adequate methods for several decades. 
             Thus, ML has emerged as a promising direction for discovering more effective optimization strategies in gate sizing.
           </p>
 
           <p>
-            We present an ML-driven approach that aims to solve the gate sizing problem with improved efficiency and scalability.
+             We present an ML-driven approach that aims to solve the gate sizing problem with improved efficiency and scalability.
           </p>
         </section>
         
         <section id="background_1">
           <h3>Gate Sizing Problems</h3>
           <p>
-            Gate sizing has long been explored as a technique for optimizing the circuit's performance, power, and area (PPA) by assigning the appropriate gate size to each cell from the available library candidates.
-            For standard cells with identical functionality, increasing the cell size typically enhances drive strength, reduces intrinsic delay, but leads to higher leakage power and a larger area. 
+             Gate sizing has long been explored as a technique for optimizing performance, power, and area (PPA) of the circuit by assigning the appropriate gate size to each cell from the available library candidates.
+            For standard cells with identical functionality, increasing the cell size typically enhances drive strength, reducing intrinsic delay but leading to higher leakage power and larger area. 
           </p>
 
           <p>
-            Thus, standard practice involves upsizing cells along timing-critical paths, while downsizing non-critical cells to optimize the overall design metrics.
-            However, indiscriminately following this approach may cause problems because gate sizing decisions are not purely local.
+             Thus, standard practice involves upsizing cells along timing-critical paths, while downsizing non-critical cells to optimize the overall design metrics. However, indiscriminately following this approach may cause problems because gate sizing decisions are not purely local.
             For example, upsizing a cell experiencing a setup timing violation can reduce its intrinsic delay and resolve downstream timing issues.
             Nevertheless, this upsizing simultaneously increases the cell’s input capacitance, imposing a higher load on its driver cell and thereby potentially increasing the delay of upstream stages.
             Consequently, this can introduce or exacerbate timing violations in preceding stages.
@@ -291,26 +291,32 @@
           </p>
 
           <p>
-            However, as process technology continues to scale and circuit complexity increases significantly, these classical optimization methods have shown critical limitations.
-            They typically suffer from excessive runtime or struggle to effectively explore the exponentially expanding search space, often yielding suboptimal performance in modern large-scale designs.
-            To overcome these limitations, machine learning-based approaches have gained increasing attention.
+             Due to the combinatorial nature of gate sizing, it is inherently an NP-hard problem.
+            To tackle this complexity, a wide array of methods have been proposed.
+            Traditional methods include geometric programming, greedy heuristics, and dynamic programming approaches.
+            More recently, methods based on Lagrangian relaxation have emerged, demonstrating promising results by decomposing the global optimization problem into more tractable subproblems.
           </p>
 
           <p>
-            As this sizing technique is one of the most powerful steps in achieving the target PPA in the optimization process, it has been extensively studied for a long time.
+             However, as process technology continues to scale and circuit complexity increases significantly, these classical optimization methods have shown critical limitations.
+            They typically suffer from excessive runtime or struggle to effectively explore the exponentially expanding search space, often yielding suboptimal performance in modern large-scale designs.
+            Thus, most of the research tries to devise efficient methods to overcome these limitations.
           </p>
-  
         </section>
 
         <section id="background_2">
           
-          <h3>Graph Representation Method</h3>
+          <h3>Graph Representation</h3>
           <p>
-            Graph representation methods are widely used when the connection information between components is essential, such as circuit design, social networks, and molecular modeling. 
-            Encoding the above data as graphs enables the structure to contain connectivity information, allowing learning-based methods, such as Graph Neural Networks (GNNs), to be effectively leveraged. 
+             Graph representation methods are widely used when the connection information between components is essential, such as circuit design, social networks, and molecular modeling.
+            Encoding the above data as graphs enables the structure to contain connectivity information so that learning based methods, such as Graph Neural Networks (GNNs), can be effectively leveraged.
             For example, Google’s graph-based placement methodology
             <a class="cite" href="#ref-1" id="c-1"></a>
             successfully applied GNNs to netlist graphs for chip floorplanning.
+          </p>
+
+          <p>
+             Motivated by these approaches, we adopt a graph-based representation of a circuit by viewing gate-level netlists as a graph with embedded features, enabling effective application of learning-based optimization techniques to the gate sizing problem.
           </p>
 
           <figure style="text-align:center;">
@@ -323,49 +329,16 @@
           </figure>
           
           <p>
-            Motivated by these approaches, we adopt a graph-based representation of a circuit by viewing gate-level netlists as a graph with embedded features, 
-            enabling practical application of learning-based optimization techniques to the gate sizing problem.
-          </p>
-
-          <p>
-            To construct the graph representation of the gate-level netlist, we utilize GNN-based embedding. 
+             To construct the graph representation of the gate-level netlist, we utilize GNN-based embedding as the Fig. 1 which explains netlist to graph representation method flow.
             While various architectures such as GCN, GraphSAGE, and GAT could be employed for this purpose, we specifically adopt the GAT structure to address the over-smoothing problem commonly observed in deep neural networks.
-            For each K-head GAT layer, it can be formulated as follows:
           </p>
-
-          <p>
-            <div class="eq-block">
-              <span class="eq-wrap">
-                \[
-                  {\Large
-                    h'_{i} = \bigg\Vert_{k=1}^{K}
-                    \sigma\!\Bigl(\sum_{j\in\mathcal{N}_{i}\cup\{i\}}
-                    \alpha^{k}_{ij}\,\omega^{k}h_{j}\Bigr)
-                  }
-                \]
-              </span>
-            </div>
-
-            <div class="eq-block">
-              <span class="eq-wrap">
-                \[
-                  {\Large
-                    a^{k}_{ij} =
-                    \frac{\exp\!\bigl(\operatorname{LReLU}(a^{\top}[\omega^{k}h_{i}\Vert\omega^{k}h_{j}]))}
-                         {\displaystyle\sum_{k\in\mathcal{N}_{i}\cup\{i\}}
-                          \exp\!\bigl(\operatorname{LReLU}(a^{\top}[\omega^{k}h_{i}\Vert\omega^{k}h_{k}]))}
-                  }
-                \]
-              </span>
-              <a class="cite" href="#ref-2" id="c-2"></a>
-            </div>
-          </p>
+          
         </section>
         
         <section id="background_3">
           <h3>Machine Learning Framework with GNN-based Embedding</h4>
           <p>
-            We formulate a machine learning framework that leverages GNN-based embeddings as input to predict performance-related metrics as output. 
+             We formulate a machine learning framework that leverages GNN-based embeddings as input to predict performance-related metrics as output.
             Several prior works have explored ML-based gate sizing, such as NVIDIA’s transformer-based approach
             <a class="cite" href="#ref-3" id="c-3"></a>,
             which employs sequence modeling to predict gate sizes in an autoregressive manner, and RL-Sizer
@@ -375,8 +348,18 @@
           </p>
 
           <p>
-            To address the challenges of the above ML-based model, we propose a transformer-based framework using GNN-derived embeddings.
-            Our method efficiently compensates for locality agnosticism, a well-known shortcoming of transformers, by leveraging the GNN's ability to encode local structural information through message passing.
+             To address the above ML-based model’s challenges, we propose a transformer-based framework using GNN-derived embeddings. Our method efficiently compensates locality agnosticism, which is a well-known transformer’s shortage, by utilizing the GNN's ability to encode local structural information through message passing.
+          </p>
+        </section>
+
+        <section id="background_4">
+          <h3>Previous ML-based Gate Sizer vs. Ours</h4>
+          <p>
+            Our gate sizer is a novel gate sizing framework that effectively integrates the strengths of heterogeneous graphs, Graph Attention Networks (GAT), and Transformers to simultaneously capture short and long-range dependencies.
+          </p>
+
+          <p>
+             To address the above ML-based model’s challenges, we propose a transformer-based framework using GNN-derived embeddings. Our method efficiently compensates locality agnosticism, which is a well-known transformer’s shortage, by utilizing the GNN's ability to encode local structural information through message passing.
           </p>
         </section>
 
@@ -386,18 +369,18 @@
           <hr class="section-divider">
           <p>
             In this section, we introduce our gate sizing framework, which leverages a heterogeneous graph attention network combined with transformer encoder layers.
-            Our novel gate sizing method consists of 2 parts: graph representation with GAT, and transformer structure with a proper loss function for gate sizing.
-            Additionally, we propose an efficient representation method for the netlist using our modified heterogeneous graph structure. 
+            Our novel gate sizing method consists of 2 parts, graph representation with GAT, and transformer structure with proper loss function for gate sizing.
+            Also, we represent an efficient representation method for netlist with our modified heterogeneous graph structure.
+            We begin this section by explaining the motivation behind using a heterogeneous graph, which serves as the foundation for the subsequent components of our framework. 
           </p>
         </section>
 
         <section id="methods_1">
-          <h3>Graph Representation and Feature Embedding</h4>
+          <h3>Why Heterogeneous Graph?</h4>
           <p>
-            We first partition the circuit into smaller subcircuits to simplify the circuit for efficient modeling.
-            Each subcircuit is defined by designating input ports or registers as starting points and output ports or registers as endpoints. 
-            Specifically, a subcircuit combines all paths sharing the same start and endpoints. 
-            Thus, we propose a heterogeneous graph model that effectively captures the intrinsic structure of the circuit by delineating its two fundamental node types: pins and cells, as depicted in Fig. 2.
+            In gate sizing, there are two common ways to represent all pins using a homogeneous graph.
+            The first method is to concatenate all pin information into a single embedding for each cell, and then perform inference on the cell.
+            The second method connects pins and cells separately and masks the pins during inference. Below figure reveals two approaches in comparison.
           </p>
 
           <figure style="text-align:center;">
@@ -643,6 +626,16 @@
                 </span>
                 <span class="ref-detail">
                   X. Xiang et al., <em>Proc. AISTATS</em> 2024.
+                </span>
+              </li>
+
+              <li id="ref-3">
+                <a href="#c-3" class="back">↩︎</a>
+                <span class="ref-title">
+                  TransSizer: A Novel Transformer-Based Fast Gate Sizer
+                </span>
+                <span class="ref-detail">
+                  S. Nath et al., <em>Proc. ICCAD</em> 2022.
                 </span>
               </li>
 
