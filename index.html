@@ -236,7 +236,7 @@
             <ul>
               <li><a href="#methods_1">Why Heterogeneous Graph?</a></li>
               <li><a href="#methods_2">Graph Representation and Feature Embedding</a></li>
-              <li><a href="#methods_3">Model Architecture (HeteroGAT and Transformer)</a></li>
+              <li><a href="#methods_3">Model Architecture (HeteroGAT + Transformer)</a></li>
               <li><a href="#methods_4">Loss Function</a></li>
             </ul>
           </li>
@@ -499,12 +499,12 @@
           </p>
 
           <figure style="text-align:center;">
-            <img src="./Image/Table_1.png""
-                 alt="Table_1"
-                 class="img-fluid w-50 d-block mx-auto mb-4">
             <figcaption class="figure-caption">
               Table 1. Pin and Cell Node Features
             </figcaption>
+            <img src="./Image/Table_1.png""
+                 alt="Table_1"
+                 class="img-fluid w-50 d-block mx-auto mb-4">
           </figure>
 
           <p>
@@ -517,7 +517,7 @@
         </section>
 
         <section id="methods_3">
-          <h3>Model Architecture (HeteroGAT and Transformer)</h4>
+          <h3>Model Architecture (HeteroGAT + Transformer)</h4>
           <p>
              Our proposed approach incorporates both topological and geometric circuit information to improve sizing performance.
             The following figure illustrates an overview of DPH-Sizer.
@@ -720,12 +720,12 @@
             </p>
 
             <figure style="text-align:center;">
-              <img src="./Image/Table_2.png""
-                   alt="Table_2"
-                   class="img-fluid w-50 d-block mx-auto mb-4">
               <figcaption class="figure-caption">
                 Table 2. Design statistics for gate sizing.
               </figcaption>
+              <img src="./Image/Table_2.png""
+                   alt="Table_2"
+                   class="img-fluid w-50 d-block mx-auto mb-4">
             </figure>
           </section>
 
@@ -739,20 +739,23 @@
             </p>
   
             <figure style="text-align:center;">
-              <img src="./Image/Table_3.png""
-                   alt="Table_3"
-                   class="img-fluid w-50 d-block mx-auto mb-4">
               <figcaption class="figure-caption">
                 Table 3. Validation accuracy comparison of models. Best results are highlighted in bold.
               </figcaption>
+              <img src="./Image/Table_3.png""
+                   alt="Table_3"
+                   class="img-fluid w-50 d-block mx-auto mb-4">
+              <small class="text-muted">
+                <sup>1</sup>HomoGAT <sup>2</sup>HeteroGAT <sup>3</sup>HeteroGAT+Transformer
+              </small>
             </figure>
   
             <p>
               The following are the key observations:
               <ul class="dash-list">
-                <li>HomoGAT surpasses DAGSizer by roughly 5.8 % average accuracy, indicating that GAT layers are better suited than GCN layers for gate-sizing tasks.</li>
+                <li>HomoGAT surpasses DAG-Sizer by roughly 5.8 % average accuracy, indicating that GAT layers are better suited than GCN layers for gate-sizing tasks.</li>
                 <li>Using a heterogeneous graph (HeteroGAT) yields a 12.9 % accuracy gain over HomoGAT, confirming that explicitly separating pin and cell nodes captures circuit relationships more faithfully.</li>
-                <li>Adding a Transformer on top of HeteroGAT delivers a further 6.8 % improvement, showing that the hybrid HeteroGAT + Transformer model provides the strongest representational capacity.</li>
+                <li>Adding a Transformer on top of HeteroGAT delivers a further 6.8 % improvement, sho이거wing that the hybrid HeteroGAT + Transformer model provides the strongest representational capacity.</li>
               </ul>
             </p>
           </section>
