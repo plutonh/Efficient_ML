@@ -637,9 +637,9 @@
           <p>
             Following two successive HeteroGAT layers, cell and pin embeddings individually reside in \( \mathbb{R}^{B \times N_c \times F_o} \) and \( \mathbb{R}^{B \times N_p \times F_o} \), respectively.
             We concatenate both embeddings to form the input to the positional encoder, fully leveraging the extracted node representations.
-            Given an input embedding sequence 𝑋 ∈R^(𝐵×𝐿×𝑑_model) and a learnable positional encoding matrix 𝑃 ∈R^(1×𝐿_max × 𝑑_model), the output embedding 𝑋′with positional encoding is defined by adding the positional encoding to the input embeddings.
-            Where 𝐵 denotes the batch size, 𝐿= 𝑁𝑐+𝑁𝑝 is the total number of nodes, and 𝑑model represents the embedding dimension.
-            The positional encoding matrix 𝑃 is optimized jointly with the transformer parameters, enabling the model to learn meaningful positional information of the nodes adaptively.
+            Given an input embedding sequence \( \mathbf{X} \in \mathbb{R}^{B \times L \times d_{\text{model}}} \) and a learnable positional encoding matrix \( \mathbf{P} \in \mathbb{R}^{1 \times L_{\max} \times d_{\text{model}}} \), the output embedding \( \mathbf{X}' \) with positional encoding is defined by adding the positional encoding to the input embeddings.
+            Here, \( B \) denotes the batch size, \( L = N_c + N_p \) is the total number of nodes, and \( d_{\text{model}} \) represents the embedding dimension.
+            The positional encoding matrix \( \mathbf{P} \) is optimized jointly with the transformer parameters, enabling the model to learn meaningful positional information of the nodes adaptively.
           </p>
         </section>
         
