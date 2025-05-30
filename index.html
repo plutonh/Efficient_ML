@@ -740,6 +740,12 @@
 
           <p>
             The following are the key observations:
+            <ul class="dash-list">
+              <li>HomoGAT surpasses DAGSizer by roughly 5.8 % average accuracy, indicating that GAT layers are better suited than GCN layers for gate-sizing tasks.</li>
+              <li>Using a heterogeneous graph (HeteroGAT) yields a 12.9 % accuracy gain over HomoGAT, confirming that explicitly separating pin and cell nodes captures circuit relationships more faithfully.</li>
+              <li>Adding a Transformer on top of HeteroGAT delivers a further 6.8 % improvement, showing that the hybrid HeteroGAT + Transformer model provides the strongest representational capacity.</li>
+            </ul>
+          
           </p>
 
           
@@ -752,11 +758,13 @@
           <hr class="section-divider">
           <p>
             In this work, we formulate gate sizing as a node classification problem and propose DPH-Sizer, a novel framework that combines a heterogeneous graph, GAT, and a transformer network.
-            
-            <ul class="dash-list">
-              <li>Limitations of this work</li>
-            </ul>
-          
+          </p>
+          <p>
+             Despite addressing several challenges of prior ML approaches, our proposed method still exhibits a few observable limitations.
+            First, our model is trained on a limited set of technology nodes and design styles, which makes the model learn harder when applied to unseen standard cell libraries for generalization.
+            Second, as our method generates a complete solution for all gates in a single inference step, it lacks support for iteration-based, incremental improvements.
+            Finally, since our model’s ultimate goal for our task is to serve as a prediction model, it is inherently bounded by the quality of the training data and cannot surpass the performance of the golden reference solutions.
+           <p> 
             Therefore, the future direction of model enhancement is the quality of sizing solutions. 
             We directly modified the loss function, ultimately resulting in improved PPA metrics across all benchmarks.
           </p>
