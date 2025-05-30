@@ -242,6 +242,12 @@
           </li>
           
           <li><a href="#experiment_result">Experimental Results</a>
+            <ul>
+              <li><a href="#experiment_result_1">Experiment Setup</a></li>
+              <li><a href="#experiment_result_2">DPH-Sizer vs. Previous Models</a></li>
+              <li><a href="#experiment_result_3">Runtime Analysis</a></li>
+            </ul>
+          </li>
         
           <li><a href="#conclusion">Conclusion</a></li>
         
@@ -697,59 +703,64 @@
           <h1>Experimental Results</h1>
           <hr class="section-divider">
 
-          <h3>Experiment Setup</h3>
-          <p>
-             The experiments are conducted on a server with an Intel Xeon Gold 6226R CPU and an NVIDIA TITAN RTX GPU.
-            We utilize open-source benchmarks provided by OpenCores
-            <a class="cite" href="#ref-7" id="c-7"></a>
-            to train and evaluate the gate sizing model, as detailed in Table 2.
-            The dataset comprises five training designs.
-            For validation, one design is reserved for testing, while the remaining four are used for training.
-            We used Synopsys Design Compiler
-            <a class="cite" href="#ref-8" id="c-8"></a>
-            for synthesis and Cadence Innovus
-            <a class="cite" href="#ref-9" id="c-9"></a>,for placement with an Intel 22nm PDK.
-            The gate sizing model is implemented using Pytorch and DGL.
-          </p>
+          <section id="experiment_result_1">
+            <h3>Experiment Setup</h3>
+            <p>
+               The experiments are conducted on a server with an Intel Xeon Gold 6226R CPU and an NVIDIA TITAN RTX GPU.
+              We utilize open-source benchmarks provided by OpenCores
+              <a class="cite" href="#ref-7" id="c-7"></a>
+              to train and evaluate the gate sizing model, as detailed in Table 2.
+              The dataset comprises five training designs.
+              For validation, one design is reserved for testing, while the remaining four are used for training.
+              We used Synopsys Design Compiler
+              <a class="cite" href="#ref-8" id="c-8"></a>
+              for synthesis and Cadence Innovus
+              <a class="cite" href="#ref-9" id="c-9"></a>,for placement with an Intel 22nm PDK.
+              The gate sizing model is implemented using Pytorch and DGL.
+            </p>
 
-          <figure style="text-align:center;">
-            <img src="./Image/Table_2.png""
-                 alt="Table_2"
-                 class="img-fluid w-50 d-block mx-auto mb-4">
-            <figcaption class="figure-caption">
-              Table 2. Design statistics for gate sizing.
-            </figcaption>
-          </figure>
+            <figure style="text-align:center;">
+              <img src="./Image/Table_2.png""
+                   alt="Table_2"
+                   class="img-fluid w-50 d-block mx-auto mb-4">
+              <figcaption class="figure-caption">
+                Table 2. Design statistics for gate sizing.
+              </figcaption>
+            </figure>
+          </section>
 
+          <section id="experiment_result_2">
           <h3>DPH-Sizer vs. Previous Models</h3>
-          <p>
-            Table 3 summarizes validation-set accuracy on previously unseen layouts, a direct indicator of each model’s representational capacity.
-            We evaluate our own re-implementations of TransSizer (our reproduction achieves an average accuracy of 61.3%, essentially matching the 62% reported by the authors when the D5 benchmark is excluded), DAGSizer, a homogeneous-graph GAT baseline (HomoGAT), a HeteroGAT-only model, and the proposed HeteroGAT + Transformer architecture.
-            For fairness, the parameter counts of “\(Ours^1\)” and “\(Ours^2\)” were kept within 5 % of each other by adjusting hidden-layer widths.
-            All models were trained with an untuned cross-entropy loss, focusing solely on expressive power.
-          </p>
+            <p>
+              Table 3 summarizes validation-set accuracy on previously unseen layouts, a direct indicator of each model’s representational capacity.
+              We evaluate our own re-implementations of TransSizer (our reproduction achieves an average accuracy of 61.3%, essentially matching the 62% reported by the authors when the D5 benchmark is excluded), DAGSizer, a homogeneous-graph GAT baseline (HomoGAT), a HeteroGAT-only model, and the proposed HeteroGAT + Transformer architecture.
+              For fairness, the parameter counts of “\(Ours^1\)” and “\(Ours^2\)” were kept within 5 % of each other by adjusting hidden-layer widths.
+              All models were trained with an untuned cross-entropy loss, focusing solely on expressive power.
+            </p>
+  
+            <figure style="text-align:center;">
+              <img src="./Image/Table_3.png""
+                   alt="Table_3"
+                   class="img-fluid w-50 d-block mx-auto mb-4">
+              <figcaption class="figure-caption">
+                Table 3. Validation accuracy comparison of models. Best results are highlighted in bold.
+              </figcaption>
+            </figure>
+  
+            <p>
+              The following are the key observations:
+              <ul class="dash-list">
+                <li>HomoGAT surpasses DAGSizer by roughly 5.8 % average accuracy, indicating that GAT layers are better suited than GCN layers for gate-sizing tasks.</li>
+                <li>Using a heterogeneous graph (HeteroGAT) yields a 12.9 % accuracy gain over HomoGAT, confirming that explicitly separating pin and cell nodes captures circuit relationships more faithfully.</li>
+                <li>Adding a Transformer on top of HeteroGAT delivers a further 6.8 % improvement, showing that the hybrid HeteroGAT + Transformer model provides the strongest representational capacity.</li>
+              </ul>
+            </p>
+          </section>
 
-          <figure style="text-align:center;">
-            <img src="./Image/Table_3.png""
-                 alt="Table_3"
-                 class="img-fluid w-50 d-block mx-auto mb-4">
-            <figcaption class="figure-caption">
-              Table 3. Validation accuracy comparison of models. Best results are highlighted in bold.
-            </figcaption>
-          </figure>
+          <section id="experiment_result_3">
+            <h3>Runtime Analysis</h3>
 
-          <p>
-            The following are the key observations:
-            <ul class="dash-list">
-              <li>HomoGAT surpasses DAGSizer by roughly 5.8 % average accuracy, indicating that GAT layers are better suited than GCN layers for gate-sizing tasks.</li>
-              <li>Using a heterogeneous graph (HeteroGAT) yields a 12.9 % accuracy gain over HomoGAT, confirming that explicitly separating pin and cell nodes captures circuit relationships more faithfully.</li>
-              <li>Adding a Transformer on top of HeteroGAT delivers a further 6.8 % improvement, showing that the hybrid HeteroGAT + Transformer model provides the strongest representational capacity.</li>
-            </ul>
-          
-          </p>
-
-          
-          
+          </section>
         </section>
 
         <!-- ────────── Conclusion ────────── -->
@@ -759,12 +770,17 @@
           <p>
             In this work, we formulate gate sizing as a node classification problem and propose DPH-Sizer, a novel framework that combines a heterogeneous graph, GAT, and a transformer network.
           </p>
+          
           <p>
-             Despite addressing several challenges of prior ML approaches, our proposed method still exhibits a few observable limitations.
-            First, our model is trained on a limited set of technology nodes and design styles, which makes the model learn harder when applied to unseen standard cell libraries for generalization.
-            Second, as our method generates a complete solution for all gates in a single inference step, it lacks support for iteration-based, incremental improvements.
-            Finally, since our model’s ultimate goal for our task is to serve as a prediction model, it is inherently bounded by the quality of the training data and cannot surpass the performance of the golden reference solutions.
-           <p> 
+             Despite addressing several challenges of prior ML approaches, our proposed method still exhibits a few observable limitations:
+            <ul class="dash-list">
+              <li>Our model is trained on a limited set of technology nodes and design styles, which makes it harder for the model to learn when applied to unseen standard cell libraries for generalization.</li>
+              <li>As our method generates a complete solution for all gates in a single inference step, it lacks support for iteration-based, incremental improvements.</li>
+              <li> Since our model’s ultimate goal for our task is to serve as a prediction model, it is inherently bounded by the quality of the training data and cannot surpass the performance of the golden reference solutions.</li>
+            </ul>
+          </p>
+          
+          <p> 
             Therefore, the future direction of model enhancement is the quality of sizing solutions. 
             We directly modified the loss function, ultimately resulting in improved PPA metrics across all benchmarks.
           </p>
