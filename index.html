@@ -85,7 +85,6 @@
       content:"[" counter(cite-counter) "]";
     }
 
-
     /* ────────── Main ────────── */
     article h1, article h2, article h3{ font-weight:800; margin-top:3rem; margin-bottom:1rem; }
     article p{ line-height:1.6; }
@@ -260,9 +259,9 @@
           <hr class="section-divider">
           <p>
              Chip placement and routing (P&R) is the engineering task of designing the physical layout of a computer chip. 
-            Although P&R could physically produce a layout with an optimization process, it is an NP-hard problem that can optimize the layout considering various metrics for improvement.
+            Although P&R can physically produce a layout through an optimization process, it is an NP-hard problem that requires optimization to consider various metrics for improvement.
             Particularly in the gate size optimization problem, researchers couldn’t find a feasible algorithmic method, even if they suggested various adequate methods for several decades. 
-            Thus, ML has emerged as a promising direction for discovering more effective optimization strategies in gate sizing.
+            Thus, machine learning (ML) has emerged as a promising direction for discovering more effective optimization strategies in gate sizing.
           </p>
 
           <p>
@@ -273,8 +272,8 @@
         <section id="background_1">
           <h3>Gate Sizing Problems</h3>
           <p>
-             Gate sizing has long been explored as a technique for optimizing performance, power, and area (PPA) of the circuit by assigning the appropriate gate size to each cell from the available library candidates.
-            For standard cells with identical functionality, increasing the cell size typically enhances drive strength, reducing intrinsic delay but leading to higher leakage power and larger area. 
+             Gate sizing has long been explored as a technique for optimizing the performance, power, and area (PPA) of circuits by assigning the appropriate gate size to each cell from the available library candidates.
+            For standard cells with identical functionality, increasing the cell size typically enhances drive strength and reduces intrinsic delay, but it also leads to higher leakage power and a larger area. 
           </p>
 
           <p>
@@ -292,16 +291,9 @@
           </p>
 
           <p>
-             Due to the combinatorial nature of gate sizing, it is inherently an NP-hard problem.
-            To tackle this complexity, a wide array of methods have been proposed.
-            Traditional methods include geometric programming, greedy heuristics, and dynamic programming approaches.
-            More recently, methods based on Lagrangian relaxation have emerged, demonstrating promising results by decomposing the global optimization problem into more tractable subproblems.
-          </p>
-
-          <p>
              However, as process technology continues to scale and circuit complexity increases significantly, these classical optimization methods have shown critical limitations.
             They typically suffer from excessive runtime or struggle to effectively explore the exponentially expanding search space, often yielding suboptimal performance in modern large-scale designs.
-            Thus, most of the research tries to devise efficient methods to overcome these limitations.
+            Thus, most research attempts to devise efficient methods to overcome these limitations.
           </p>
         </section>
 
@@ -310,7 +302,7 @@
           <h3>Graph Representation</h3>
           <p>
              Graph representation methods are widely used when the connection information between components is essential, such as circuit design, social networks, and molecular modeling.
-            Encoding the above data as graphs enables the structure to contain connectivity information so that learning based methods, such as Graph Neural Networks (GNNs), can be effectively leveraged.
+            Encoding the above data as graphs enables the structure to contain connectivity information, allowing learning-based methods, such as Graph Neural Networks (GNNs), to be effectively leveraged.
             For example, Google’s graph-based placement methodology
             <a class="cite" href="#ref-1" id="c-1"></a>
             successfully applied GNNs to netlist graphs for chip floorplanning.
@@ -348,7 +340,7 @@
             Another previous work by X. Zhou et al.
             <a class="cite" href="#ref-5" id="c-5"></a>,
             integrated a heterogeneous graph-based GNN into a Lagrangian relaxation-based sizing framework, using AI to narrow down the sizing candidates rather than performing direct sizing.
-            Additionally, their approach utilizes a GNN based on neighborhood aggregation, which inherently constrains the model to capture only short-range information.
+            Additionally, their approach utilizes a GNN based on neighborhood aggregation, which inherently limits the model's ability to capture only short-range information.
             This method thus faces limitations in adequately modeling long-range dependencies. On the other hand, DAG-Sizer
             <a class="cite" href="#ref-6" id="c-6"></a>
             represented circuits as homogeneous graphs and directly performed gate sizing through graph convolutional network (GCN) layers.
@@ -358,7 +350,7 @@
           </p>
 
           <p>
-             To address the challenges of the above ML-based model, we propose a transformer-based framework utilizing GNN-derived embeddings.
+             To address the challenges of the aforementioned ML-based model, we propose a transformer-based framework that utilizes GNN-derived embeddings.
             Our method efficiently compensates for locality agnosticism, a well-known shortcoming of transformers, by leveraging the GNN's ability to encode local structural information through message passing.
           </p>
         </section>
@@ -369,7 +361,7 @@
           <hr class="section-divider">
           <p>
             In this section, we introduce our gate sizing framework, which leverages a heterogeneous graph attention network combined with transformer encoder layers.
-            Our novel gate sizing method comprises two parts: a graph representation using GAT and a transformer structure with a suitable loss function for gate sizing.
+            Our novel gate sizing method comprises two parts: a graph representation using Graph Attention Transformer (GAT) and a transformer structure with a suitable loss function for gate sizing.
             Additionally, we propose an efficient representation method for the netlist using our modified heterogeneous graph structure.
             We begin this section by explaining the motivation behind using a heterogeneous graph, which serves as the foundation for the subsequent components of our framework. 
           </p>
@@ -387,7 +379,7 @@
           <figure style="text-align:center;">
             <img src="./Image/2_WhyHetero.png""
                  alt="Why_Hetero"
-                 class="figure-img img-fluid w-70 mb-4"">
+                 class="figure-img img-fluid w-100 mb-4"">
           
             <figcaption class="figure-caption">
               Figure 2. Why is Heterogeneous Graph Representation Needed?
@@ -404,14 +396,14 @@
 
           <p>
             On the other hand, the masking approach, while promising, has limitations in the context of gate sizing.
-            There are previous studies, including DAG-based models, that have highlighted the negative impact of excessive masking on model performance.
-            Masking may obscure important relationships between cells and pins, particularly when dealing with complex circuits, such as those involved in gate sizing.
+            Previous studies, including those based on DAG models, have highlighted the negative impact of excessive masking on model performance.
+            Masking may obscure meaningful relationships between cells and pins, particularly when dealing with complex circuits, such as those involved in gate sizing.
           </p>
 
           <p>
              When it comes to sequences, homogeneous graphs introduce even greater challenges.
             Not only do they fail to capture all adjacent cell interactions, but the aforementioned issues with pin embeddings also persist.
-            This results in an incomplete representation, making it difficult to achieve optimal gate sizing.
+            This results in an incomplete representation, making it challenging to achieve optimal gate sizing.
           </p>
 
           <p>
@@ -424,11 +416,11 @@
         <section id="method_2">
           <h3>Graph Representation and Feature Embedding</h4>
           <p>
-              Still, how we represent a netlist as a heterogeneous graph is an important issue for the performance of prediction models.
-            When we represent netlist as the graph, representing every cell and pin in the circuit as a single graph requires substantial data and can lead to GPU memory issues.
+              Still, how we represent a netlist as a heterogeneous graph is an essential issue for the performance of prediction models.
+            When we represent a netlist as a graph, representing every cell and pin in the circuit as a single graph requires substantial data and can lead to GPU memory issues.
             To alleviate computational complexity and enable efficient modeling, we first partition the circuit into smaller subcircuits.
             Each subcircuit is defined by selecting input ports or registers as sources and output ports or registers as sinks, encompassing all paths connecting these sources to their corresponding sinks.
-            We then construct a heterogeneous graph that explicitly distinguishes between pins and cells and captures multiple edge types to represent their connectivity.
+            We then construct a heterogeneous graph that explicitly distinguishes between pins and cells, capturing multiple edge types to represent their connectivity.
             The equation of the graph representation is as follows:
           </p>
           
@@ -717,7 +709,7 @@
           <h1>Conclusion</h1>
           <hr class="section-divider">
           <p>
-            In this work, we formulate gate sizing as a node classification problem and propose DPH-Sizer, a novel framework that combines a heterogeneous graph, Graph Attention Networks (GAT), and a transformer network.
+            In this work, we formulate gate sizing as a node classification problem and propose DPH-Sizer, a novel framework that combines a heterogeneous graph, GAT, and a transformer network.
             
             <ul class="dash-list">
               <li>Limitations of this work</li>
